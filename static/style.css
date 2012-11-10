@@ -1,16 +1,23 @@
-svg {
-    border: 1px black solid;
-}
-
 body {
     background-color: rgb(240,235,157);
     margin: 0px;
 }
 
 .top {
-    background-color: rgb(180,138,118);
+    background-color: rgb(180,108,92);
     padding-top: 4px;
     padding-left: 4px;
+}
+
+textarea.source {
+    position: absolute;
+    border-width: 0px;
+    border-left-width: 4px;
+    border-color: rgb(180,108,92);
+    top: 37px;
+    right: 0px;
+    width: 396px;
+    bottom: 0px;
 }
 
 .login {

@@ -12,9 +12,12 @@ var renderPlayer = require("./renderPlayer")
 module.exports = World
 
 function World(model) {
-    var paper = Raphael(10, 50, 600, 480)
-    var center = point({ x: 300, y: 240 })
-    var world = screen(center, 600, 480)
+    var width = window.innerWidth - 400 - 4
+    var height = window.innerHeight - 40 - 4
+    
+    var paper = Raphael(0, 40, width, height)
+    var center = point({ x: width / 2, y: height / 2 })
+    var world = screen(center, width, height)
 
     model.on("create", renderEntity)
     world.center = center

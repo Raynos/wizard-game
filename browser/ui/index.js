@@ -34,11 +34,7 @@ function UI(doc) {
     document.body.appendChild(login.root)
 
     var ta = document.createElement('textarea')
-    ta.style.position = 'absolute'
-    ta.style.top = '40px'
-    ta.style.left = '620px'
-    ta.style.width = '400px'
-    ta.style.height = '480px'
+    ta.className = 'source'
     document.body.appendChild(ta)
 
     world.on('examine', function (entity) {
