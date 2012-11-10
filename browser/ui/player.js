@@ -8,7 +8,7 @@ function Player(paper, relative) {
     var w = 86, h = 133
     
     var directions = [ 'front', 'back', 'left', 'right' ]
-    var color = 'green'
+    var color = 'orange'
     var sprites = directions.reduce(function (acc, dir) {
         var pre = '/wizard_' + color + '_' + dir + '_'
         acc[dir] = [
