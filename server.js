@@ -1,10 +1,11 @@
+var crdt = require('crdt')
+var model = module.exports = new (crdt.Doc)
 
 var shoe = require('shoe')
 var ecstatic = require('ecstatic')
 var http = require('http')
 var MuxDemux = require("mux-demux")
 var join = require('path').join
-var model = require('./model')
 var reloader = require('client-reloader')
 var uuid = require("node-uuid")
 
