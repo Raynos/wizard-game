@@ -42,8 +42,12 @@ function UI(doc) {
     var editor = ace.edit(div)
     var session = editor.getSession()
 
+    console.log("ace", ace, editor, session)
+
     editor.setTheme("ace/theme/monokai")
     session.setMode("ace/mode/javascript")
+
+    editor.textInput.blur()
 
     world.on('examine', function (entity) {
         console.log(entity)

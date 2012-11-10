@@ -19,7 +19,7 @@ function api (row) {
   var api = {
     say: function (text) {
       if(text) {
-        console.log('<'+JSON.stringify(text)+'>--'+row.get('id') )      
+        console.log('<'+JSON.stringify(text)+'>--'+row.get('id') )
         row.set('say', text)
       }
       return api
@@ -30,7 +30,7 @@ function api (row) {
         , _y = row.get('y') + y;
 
       console.log('['+_x+', '+_y+']--'+row.get('id'))
-      
+
 
       row.set('x', _x)
       row.set('y', _y)
