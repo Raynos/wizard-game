@@ -88,8 +88,21 @@ function renderPlayer(paper, absolute, row) {
             , y: 240
         })
 
-        entity.on("change", function (key, value) {
-            row.set(key, absolute[key] + value)
+        entity.on("change", function (changes) {
+            var pos = {
+                x: absolute.x
+                , y: absolute.y
+            }
+
+            if (changes.x) {
+                pos.x += changes.x
+            }
+
+            if (changes.y) {
+                pos.y += changes.y
+            }
+
+            row.set(pos)
         })
     }
 }
