@@ -2,6 +2,7 @@
 var screen = require("screen")
 var Raphael = require("raphael-browserify")
 var point = require("screen/point")
+var once = require("once")
 
 var entities = require("../entities")
 var Player = require("./player")
@@ -70,15 +71,25 @@ function World(model) {
 }
 
 function renderPlayer(paper, absolute, row) {
-    console.log("renderPlayer")
-    var entity = Player(paper, {
-        x: 300
-        , y: 240
+    var create = once(createEntity)
+
+    row.on("change", function (changes) {
+        if ("x" in row.state && "y" in row.state) {
+            create()
+        }
+
+        absolute(changes)
     })
 
-    entity.on("change", function (key, value) {
-        row.set(key, absolute[key] + value)
-    })
+    function createEntity() {
+        console.log("renderPlayer")
+        var entity = Player(paper, {
+            x: 300
+            , y: 240
+        })
 
-    row.on("change", absolute)
+        entity.on("change", function (key, value) {
+            row.set(key, absolute[key] + value)
+        })
+    }
 }
