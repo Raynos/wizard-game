@@ -1,14 +1,30 @@
 /*global screen:true*/
 var uuid = require("node-uuid")
-
 var World = require("./world")
 var Login = require("./login")
 
+// Hackish name
+var NAME = require("../name")
+
 module.exports = UI
 
-function UI(model) {
-    var center = World(model)
-    var login = Login(model)
+function UI(doc) {
+    var login = Login()
+
+    World(doc)
+
+    document.body.appendChild(login.root)
+
+    login.on("name", function (name) {
+        console.log("name", name)
+        var row = doc.add({
+            id: "human:" + NAME.name
+            , name: name
+            , x: 0
+            , y: 0
+            , type: "human"
+        })
+    })
 
     // mock(model)
 }
