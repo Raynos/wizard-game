@@ -4,10 +4,10 @@ var Raphael = require("raphael-browserify")
 var point = require("screen/point")
 
 var entities = require("../entities")
-var Player = require("./player")
+
 // mother of all hacks
 var NAME = require("../name")
-
+var renderPlayer = require("./renderPlayer")
 
 module.exports = World
 
@@ -67,18 +67,4 @@ function World(model) {
             })
         }
     }
-}
-
-function renderPlayer(paper, absolute, row) {
-    console.log("renderPlayer")
-    var entity = Player(paper, {
-        x: 300
-        , y: 240
-    })
-
-    entity.on("change", function (key, value) {
-        row.set(key, absolute[key] + value)
-    })
-
-    row.on("change", absolute)
 }

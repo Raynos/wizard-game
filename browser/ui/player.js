@@ -28,18 +28,27 @@ function Player(paper, relative) {
 
     NAME.on('color', function (c) { animate(true) })
 
-    keys.on('change', function (key, value) {
+    keys.on('change', function (coords) {
+        var key = ""
+        if (coords.x) {
+            key = "x" + coords.x
+        } else if (coords.y) {
+            key = "y" + coords.y
+        }
+
         var d = {
-            'x+1' : 'right',
+            'x1' : 'right',
             'x-1' : 'left',
             'y-1' : 'back',
-            'y+1' : 'front',
-        }[key + (value < 0 ? '' : '+') + value]
+            'y1' : 'front',
+        }[key]
         last = Date.now()
-        if (direction !== d) animate()
+        if (direction !== d) {
+            animate()
+        }
         direction = d
     })
-    
+
     var animate = (function () {
         var prev = null
         var ix = 0
