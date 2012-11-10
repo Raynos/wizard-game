@@ -49,3 +49,10 @@ self.look(function (other) {
   //say, move up and sap it?
 
 })
+
+//make text appear above the user
+self.say(text)
+
+self.hear(function (text, entity) {
+  //if someone nearby said something...
+})
