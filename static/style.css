@@ -9,11 +9,12 @@ body {
     padding-left: 4px;
 }
 
-textarea.source {
+svg {
+    border-bottom: 1px solid black;
+}
+
+div.source {
     position: absolute;
-    border-width: 0px;
-    border-left-width: 4px;
-    border-color: rgb(180,108,92);
     top: 37px;
     right: 0px;
     width: 396px;

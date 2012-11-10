@@ -1,5 +1,7 @@
 /*global screen:true*/
 var uuid = require("node-uuid")
+var ace = window.ace
+
 var World = require("./world")
 var Login = require("./login")
 
@@ -33,13 +35,20 @@ function UI(doc) {
 
     document.body.appendChild(login.root)
 
-    var ta = document.createElement('textarea')
-    ta.className = 'source'
-    document.body.appendChild(ta)
+    var div = document.createElement('div')
+    div.className = 'source'
+    document.body.appendChild(div)
+
+    var editor = ace.edit(div)
+    var session = editor.getSession()
+
+    editor.setTheme("ace/theme/monokai")
+    session.setMode("ace/mode/javascript")
 
     world.on('examine', function (entity) {
-      console.log(entity)
-      ta.innerText = JSON.stringify(entity.toJSON())
+        console.log(entity)
+        editor.setValue(JSON.stringify(
+            entity.toJSON(), null, '\t'))
     })
 
     login.on("name", function (name) {
