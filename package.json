@@ -1,0 +1,31 @@
+{
+  "name": "nko3-teh-wizzards-of-stre",
+  "version": "0.0.0",
+  "description": "teh_wizzards_of_streamz",
+  "main": "server.js",
+  "scripts": {
+    "buildDev": "browserify client.js -o static/bundle.js --debug",
+    "build": "browserify client.js -o static/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/teh-wizzards-of-stre.git"
+  },
+  "dependencies": {
+    "client-reloader": "~1.0.2",
+    "crdt": "~3.1.4",
+    "ecstatic": "~0.1.6",
+    "mux-demux": "~3.3.4",
+    "reconnect": "~0.2.0",
+    "scuttlebutt": "~4.1.1",
+    "shoe": "0.0.7"
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "teh-wizzards-of-stre.nko3",
+  "devDependencies": {
+    "wr": "~1.2.1",
+    "live-reload": "~0.2.0"
+  }
+}
