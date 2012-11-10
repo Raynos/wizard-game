@@ -9,6 +9,6 @@ model.createModel = function (name, type) {
     type: type,
     x: 100+Math.random(),
     y: 100+Math.random(),
-  }
+  })
 
 }
