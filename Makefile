@@ -6,7 +6,8 @@ build:
 
 watch-build:
 	wr -v -c 5 "make build" \
-		client.js model.js static node_modules ui.js entities
+		client.js model.js static node_modules ui entities \
+
 
 live-reload:
 	live-reload --delay=1000
