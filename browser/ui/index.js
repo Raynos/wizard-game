@@ -15,6 +15,7 @@ function UI(doc) {
     var player = {
         id: "human:" + NAME.name
         , name: NAME.name
+        , color: NAME.color
         , type: "human"
         , dead: false
     }
@@ -25,6 +26,10 @@ function UI(doc) {
     }
 
     var playerRow = doc.add(player)
+    NAME.on('color', function (c) {
+        player.color = c
+        doc.set(player.id, player)
+    })
 
     document.body.appendChild(login.root)
 

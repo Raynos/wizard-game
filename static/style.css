@@ -1,3 +1,49 @@
 svg {
     border: 1px black solid;
 }
+
+body {
+    background-color: rgb(240,235,157);
+    margin: 0px;
+}
+
+.top {
+    background-color: rgb(180,138,118);
+    padding-top: 4px;
+    padding-left: 4px;
+}
+
+.login {
+    display: inline-block;
+}
+
+.color-picker {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.color {
+    border: 3px solid white;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 2px;
+    cursor: pointer;
+}
+
+.color.active {
+    border-color: yellow;
+}
+
+.color.purple {
+    background-color: #800080;
+}
+
+.color.green {
+    background-color: #80e826;
+}
+
+.color.orange {
+    background-color: #e06b1e;
+}

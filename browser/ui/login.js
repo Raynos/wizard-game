@@ -13,8 +13,34 @@ function Login() {
     var elements = html(loginHtml)
         , component = new EventEmitter()
 
+    var colors = [ "purple", "green", "orange" ]
+    colors.forEach(function (color) {
+        var div = document.createElement("div")
+        elements.colors.appendChild(div)
+        div.className = 'color ' + color
+
+        function setActive() {
+            var prev = elements.colors.querySelector('.color.active')
+            if (prev) prev.className = prev.className
+                .split(' ')
+                .filter(function (x) { return x !== 'active' })
+                .join(' ')
+            ;
+            div.className += ' active'
+        }
+
+        NAME.on("color", function (c) {
+            if (color === c) setActive()
+        })
+ 
+        ever(div).on("click", function (ev) {
+            NAME.setColor(color)
+        })
+        if (color === NAME.color) setActive()
+    })
+
     submit(elements.field, elements.button, function (value) {
-        elements.root.hidden = true
+        elements.login.style.display = 'none'
         // MOTHER OF ALL HACKS
         NAME.displayName = value
         component.emit("name", value)
