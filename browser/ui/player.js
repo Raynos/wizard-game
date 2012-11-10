@@ -6,24 +6,18 @@ module.exports = Player
 function Player(paper, relative) {
     var x = relative.x, y = relative.y
     var w = 86, h = 133
-    var sprites = {
-        front : [
-            paper.image('/wizard_front_0.svg', x, y, w, h).hide(),
-            paper.image('/wizard_front_1.svg', x, y, w, h).hide(),
-        ],
-        back : [
-            paper.image('/wizard_back_0.svg', x, y, w, h).hide(),
-            paper.image('/wizard_back_1.svg', x, y, w, h).hide(),
-        ],
-        left : [
-            paper.image('/wizard_left_0.svg', x, y, w, h).hide(),
-            paper.image('/wizard_left_1.svg', x, y, w, h).hide(),
-        ],
-        right : [
-            paper.image('/wizard_right_0.svg', x, y, w, h).hide(),
-            paper.image('/wizard_right_1.svg', x, y, w, h).hide(),
-        ],
-    }
+    
+    var directions = [ 'front', 'back', 'left', 'right' ]
+    var color = 'green'
+    var sprites = directions.reduce(function (acc, dir) {
+        var pre = '/wizard_' + color + '_' + dir + '_'
+        acc[dir] = [
+            paper.image(pre + '0.svg', x, y, w, h).hide(),
+            paper.image(pre + '1.svg', x, y, w, h).hide(),
+        ]
+        return acc
+    }, {})
+
     var keys = ArrowKeys()
     var direction = 'front'
     var last = Date.now()
