@@ -1,9 +1,9 @@
-
+var crdt = require('crdt')
+var model = module.exports = new (crdt.Doc)
 
 var reconnect = require('reconnect')
 var reloader  = require('client-reloader')
 var MuxDemux  = require('mux-demux')
-var model     = require('./model')
 var ui        = require('./ui')
 
 // GLOBAL IDENTITY HACK
