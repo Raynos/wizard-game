@@ -19,6 +19,8 @@ function UI(doc) {
         , dead: false
     }
 
+    // NAME IS A HACK
+
     if (NAME.newPlayer) {
         player.x = 300
         player.y = 240
