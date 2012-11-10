@@ -30,7 +30,8 @@
     "ever": "0.0.0",
     "arrow-keys": "~0.3.0",
     "local-store": "~0.2.0",
-    "exportify": "0.0.0"
+    "exportify": "0.0.0",
+    "energy-relay": "~0.0.0"
   },
   "engines": {
     "node": "0.8.x"
