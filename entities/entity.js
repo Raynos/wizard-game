@@ -6,18 +6,31 @@ function Entity(paper, relative) {
     entity.attr("height", 10)
     entity.attr("width", 10)
 
-    relative.on("visible", function () {
-        entity.show()
-    })
+    relative.on("visible", onvisible)
 
-    relative.on("invisible", function () {
-        entity.hide()
-    })
+    relative.on("invisible", onhide)
 
-    relative(function (pos) {
+    var remove = relative(function (pos) {
         entity.attr("x", pos.x)
         entity.attr("y", pos.y)
     })
 
+    entity.cleanup = cleanup
+
     return entity
+
+    function cleanup() {
+        remove()
+        relative.removeListener("visible", onvisible)
+        relative.removeListener("invisible", onhide)
+        entity.remove()
+    }
+
+    function onvisible() {
+        entity.show()
+    }
+
+    function onhide() {
+        entity.hide()
+    }
 }

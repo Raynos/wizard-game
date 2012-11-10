@@ -1,5 +1,5 @@
 server:
-	node server.js
+	nodemon server.js --watch ./server.js
 
 build:
 	browserify-server --bundle=client.js -o ./static/bundle.js

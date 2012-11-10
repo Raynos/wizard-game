@@ -25,27 +25,48 @@ function World(model) {
         var type = state.id.split(":")[0]
 
         row.once("change", function () {
-            console.log("change", row.state, NAME)
+            // console.log("change", row.state, NAME)
             if (row.state.name === NAME.name) {
                 return renderPlayer(paper, center, row)
+            }
+
+            if (row.state.dead) {
+                return
             }
 
             if (!entities[type]) {
                 return
             }
 
+            create()
+        })
+
+        function create() {
             var absolute = point(row.state)
             var relative = world.add(absolute)
-            console.log("type", type, entities)
+            var alive = true
 
             var entity = entities[type](paper, relative)
 
-            row.on("change", absolute)
-        })
+            row.on("change", function (changes) {
+                absolute(changes)
+
+                if (changes.dead) {
+                    alive = false
+                    entity.cleanup()
+                } else if (
+                    changes.dead === false &&
+                    alive === false
+                ) {
+                    create()
+                }
+            })
+        }
     }
 }
 
 function renderPlayer(paper, absolute, row) {
+    console.log("renderPlayer")
     var entity = Player(paper, {
         x: 300
         , y: 240

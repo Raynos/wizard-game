@@ -10,39 +10,26 @@ module.exports = UI
 
 function UI(doc) {
     var login = Login()
-
     World(doc)
+
+    var player = {
+        id: "human:" + NAME.name
+        , name: NAME.name
+        , type: "human"
+        , dead: false
+    }
+
+    if (NAME.newPlayer) {
+        player.x = 300
+        player.y = 240
+    }
+
+    var playerRow = doc.add(player)
 
     document.body.appendChild(login.root)
 
     login.on("name", function (name) {
         console.log("name", name)
-        var row = doc.add({
-            id: "human:" + NAME.name
-            , name: name
-            , x: 0
-            , y: 0
-            , type: "human"
-        })
-    })
-
-    // mock(model)
-}
-
-
-function mock(model) {
-    model.add({
-        id: "tree:" + uuid()
-        , x: Math.round(Math.random() * 600)
-        , y: Math.round(Math.random() * 480)
-        , type: "tree"
-    })
-
-    model.add({
-        id: "rock:" + uuid()
-        , x: Math.round(Math.random() * 600)
-        , y: Math.round(Math.random() * 480)
-        , type: "rock"
+        playerRow.set("displayName", name)
     })
 }
-
