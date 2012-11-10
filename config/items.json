@@ -1,0 +1,42 @@
+{
+  "rock" : {
+    "defend" : 100,
+    "attack" : 0,
+    "relay" : {
+      "throughput" : 30,
+      "radius" : 100
+    },
+    "storage" :1000,
+    "generate" : 0
+  },
+  "tree" : {
+    "defend" : 10,
+    "attack" : 0,
+    "relay" : {
+      "throughput" : 20,
+      "radius" : 50
+    },
+    "storage" : 100,
+    "generate" : 5
+  },
+  "monster" : {
+    "defend" : 40,
+    "attack" : 100,
+    "relay" : {
+      "throughput" : 50,
+      "radius" : 2
+    },
+    "storage" : 0,
+    "generate" : 0
+  },
+  "player" : {
+    "defend" : 500,
+    "attack" : 40,
+    "relay" : {
+      "throughput" : 1000,
+      "radius" : 2
+    },
+    "storage" : 1000,
+    "generate" : 5
+  }
+}
