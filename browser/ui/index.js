@@ -15,10 +15,10 @@ function UI(doc) {
     var world = World(doc)
 
     var player = {
-        id: "human:" + NAME.name
+        id: "wizard:" + NAME.name
         , name: NAME.name
         , color: NAME.color
-        , type: "human"
+        , type: "wizard"
         , dead: false
     }
 

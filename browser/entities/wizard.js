@@ -1,8 +1,8 @@
 var Entity = require("./entity")
 
-module.exports = human
+module.exports = wizard
 
-function human(paper, relative) {
+function wizard(paper, relative) {
     var entity = Entity(paper, relative)
 
     entity.attr("fill", "blue")
