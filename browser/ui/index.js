@@ -30,7 +30,8 @@ function UI(doc) {
 
     var ta = document.createElement('textarea')
     ta.style.position = 'absolute'
-    ta.style.left = '600px'
+    ta.style.top = '40px'
+    ta.style.left = '620px'
     ta.style.width = '400px'
     ta.style.height = '480px'
     document.body.appendChild(ta)
