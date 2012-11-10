@@ -20,7 +20,15 @@
     "mux-demux": "~3.3.4",
     "reconnect": "~0.2.0",
     "scuttlebutt": "~4.1.1",
-    "shoe": "0.0.7"
+    "shoe": "0.0.7",
+    "raphael-browserify": "~2.1.0",
+    "node-uuid": "~1.4.0",
+    "screen": "~0.1.6",
+    "unpack-element": "~0.2.1",
+    "fragment": "~0.3.0",
+    "ever": "0.0.0",
+    "arrow-keys": "~0.3.0",
+    "local-store": "~0.2.0"
   },
   "engines": {
     "node": "0.8.x"
@@ -28,6 +36,7 @@
   "subdomain": "teh-wizzards-of-stre.nko3",
   "devDependencies": {
     "wr": "~1.2.1",
-    "live-reload": "~0.2.0"
+    "live-reload": "~0.2.0",
+    "nodemon": "~0.6.23"
   }
 }
