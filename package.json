@@ -4,8 +4,9 @@
   "description": "teh_wizzards_of_streamz",
   "main": "server.js",
   "scripts": {
-    "buildDev": "browserify client.js -o static/bundle.js --debug",
-    "build": "browserify client.js -o static/bundle.js"
+    "build-dev": "node_modules/.bin/browserify client.js -o static/bundle.js --debug",
+    "build-dev-watch": "node_modules/.bin/browserify client.js -o static/bundle.js --debug --watch --verbose",
+    "build": "node_modules/.bin/browserify client.js -o static/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -13,12 +14,15 @@
   },
   "dependencies": {
     "client-reloader": "~1.0.2",
+    "browserify": "~1.16.3",
     "crdt": "~3.1.4",
     "ecstatic": "~0.1.6",
     "mux-demux": "~3.3.4",
     "reconnect": "~0.2.0",
     "scuttlebutt": "~4.1.1",
-    "shoe": "0.0.7"
+    "shoe": "0.0.7",
+    "raphael-browserify": "~2.1.0",
+    "node-uuid": "~1.4.0"
   },
   "engines": {
     "node": "0.8.x"
