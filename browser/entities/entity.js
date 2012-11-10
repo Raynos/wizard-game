@@ -18,6 +18,7 @@ function Entity(paper, relative) {
     entity.cleanup = cleanup
 
     return entity
+    //Raynos, you have a weird code style with functions after the return...
 
     function cleanup() {
         remove()

@@ -1,5 +1,4 @@
-var crdt = require('crdt')
-var model = module.exports = new (crdt.Doc)
+var model = require('../model')
 
 var reconnect = require('reconnect')
 var reloader  = require('client-reloader')
@@ -11,7 +10,7 @@ var NAME = require("./name")
 
 ui(model)
 
-reconnect(reloader(function (stream) {
+reconnect({maxDelay: 3e3}, reloader(function (stream) {
     console.log("mdm")
     var mdm = MuxDemux()
 

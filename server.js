@@ -1,5 +1,4 @@
-var crdt = require('crdt')
-var model = module.exports = new (crdt.Doc)
+var model = require('./model')
 
 var shoe = require('shoe')
 var ecstatic = require('ecstatic')
@@ -48,19 +47,20 @@ sock.install(server, '/shoe')
 mock(model)
 
 function mock(model) {
-    model.add({
-        id: "tree:" + uuid()
-        , x: Math.round(Math.random() * 600)
-        , y: Math.round(Math.random() * 480)
-        , type: "tree"
-    })
 
-    model.add({
-        id: "rock:" + uuid()
-        , x: Math.round(Math.random() * 600)
-        , y: Math.round(Math.random() * 480)
-        , type: "rock"
-    })
+    model.create('tree')
+    model.create('tree')
+    model.create('tree')
+    model.create('tree')
+
+    model.create('rock')
+    model.create('rock')
+    model.create('rock')
+    model.create('rock')
+
+
+    model.create('monster')
+
 }
 
 function kill(name) {
