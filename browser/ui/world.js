@@ -2,6 +2,9 @@
 var screen = require("screen")
 var Raphael = require("raphael-browserify")
 var point = require("screen/point")
+var generator = require("point-generator")
+var pick = require("deck").pick
+var uuid = require("node-uuid")
 
 var entities = require("../entities")
 
@@ -9,12 +12,31 @@ var entities = require("../entities")
 var NAME = require("../name")
 var renderPlayer = require("./renderPlayer")
 
+var types = ["tree", "rock", "monster"]
+
 module.exports = World
 
 function World(model) {
-    var paper = Raphael(10, 50, 600, 480)
-    var center = point({ x: 300, y: 240 })
-    var world = screen(center, 600, 480)
+    var width = window.innerWidth - 400 - 4
+    var height = window.innerHeight - 40 - 4
+
+    var paper = Raphael(0, 40, width, height)
+    var center = point({ x: width / 2, y: height / 2 })
+    var world = screen(center, width, height)
+    var gen = generator(world)
+    gen.on("item", function (pos) {
+        console.log("rendering", pos)
+
+        var type = pick(types)
+        var row = model.add({
+            id: type + ":" + uuid()
+            , x: pos.x
+            , y: pos.y
+            , type: type
+        })
+
+        create(pos, type, row)
+    })
 
     model.on("create", renderEntity)
     world.center = center
@@ -38,33 +60,33 @@ function World(model) {
                 return
             }
 
-            create()
+            create(row.state, type, row)
+        })
+    }
+
+    function create(pos, type, row) {
+        var absolute = point(pos)
+        var relative = world.add(absolute)
+        var alive = true
+
+        var entity = entities[type](paper, relative)
+
+        entity.node.addEventListener('click', function (e) {
+            world.emit('examine', row)
         })
 
-        function create() {
-            var absolute = point(row.state)
-            var relative = world.add(absolute)
-            var alive = true
+        row.on("change", function (changes) {
+            absolute(changes)
 
-            var entity = entities[type](paper, relative)
-
-            entity.node.addEventListener('click', function (e) {
-                world.emit('examine', row)
-            })
-
-            row.on("change", function (changes) {
-                absolute(changes)
-
-                if (changes.dead) {
-                    alive = false
-                    entity.cleanup()
-                } else if (
-                    changes.dead === false &&
-                    alive === false
-                ) {
-                    create()
-                }
-            })
-        }
+            if (changes.dead) {
+                alive = false
+                entity.cleanup()
+            } else if (
+                changes.dead === false &&
+                alive === false
+            ) {
+                create(pos, type, row)
+            }
+        })
     }
 }

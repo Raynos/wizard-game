@@ -1,6 +1,7 @@
-module.exports = '<div>' +
-    '<label>Enter your name:' +
+module.exports = '<div class="top">' +
+    '<div id="login" class="login">' +
         '<input id="field"/>' +
-    '</label>' +
-    '<button id="button">Login!</button>' +
+        '<button id="button">set name</button>' +
+    '</div>' +
+    '<div id="colors" class="color-picker"></div>' +
 '</div>'

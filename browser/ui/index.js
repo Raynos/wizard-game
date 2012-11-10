@@ -1,5 +1,7 @@
 /*global screen:true*/
 var uuid = require("node-uuid")
+var ace = window.ace
+
 var World = require("./world")
 var Login = require("./login")
 
@@ -15,6 +17,7 @@ function UI(doc) {
     var player = {
         id: "human:" + NAME.name
         , name: NAME.name
+        , color: NAME.color
         , type: "human"
         , dead: false
     }
@@ -25,20 +28,27 @@ function UI(doc) {
     }
 
     var playerRow = doc.add(player)
+    NAME.on('color', function (c) {
+        player.color = c
+        doc.set(player.id, player)
+    })
 
     document.body.appendChild(login.root)
 
-    var ta = document.createElement('textarea')
-    ta.style.position = 'absolute'
-    ta.style.top = '40px'
-    ta.style.left = '620px'
-    ta.style.width = '400px'
-    ta.style.height = '480px'
-    document.body.appendChild(ta)
+    var div = document.createElement('div')
+    div.className = 'source'
+    document.body.appendChild(div)
+
+    var editor = ace.edit(div)
+    var session = editor.getSession()
+
+    editor.setTheme("ace/theme/monokai")
+    session.setMode("ace/mode/javascript")
 
     world.on('examine', function (entity) {
-      console.log(entity)
-      ta.innerText = JSON.stringify(entity.toJSON())
+        console.log(entity)
+        editor.setValue(JSON.stringify(
+            entity.toJSON(), null, '\t'))
     })
 
     login.on("name", function (name) {
