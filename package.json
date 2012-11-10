@@ -6,7 +6,8 @@
   "scripts": {
     "build-dev": "node_modules/.bin/browserify client.js -o static/bundle.js --debug",
     "build-dev-watch": "node_modules/.bin/browserify client.js -o static/bundle.js --debug --watch --verbose",
-    "build": "node_modules/.bin/browserify client.js -o static/bundle.js"
+    "build": "node_modules/.bin/browserify client.js -o static/bundle.js",
+    "start": "server.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,8 @@
     "fragment": "~0.3.0",
     "ever": "0.0.0",
     "arrow-keys": "~0.3.0",
-    "local-store": "~0.2.0"
+    "local-store": "~0.2.0",
+    "exportify": "0.0.0"
   },
   "engines": {
     "node": "0.8.x"
@@ -37,6 +39,7 @@
   "devDependencies": {
     "wr": "~1.2.1",
     "live-reload": "~0.2.0",
-    "nodemon": "~0.6.23"
+    "nodemon": "~0.6.23",
+    "browserify-server": "~2.0.4"
   }
 }
