@@ -9,8 +9,8 @@ function renderPlayer(paper, absolute, row) {
 
     console.log("renderPlayer")
     var entity = Player(paper, {
-        x: row.state.x || 300
-        , y: row.state.y || 240
+        x: row.state.x || (paper.width - 80) / 2
+        , y: row.state.y || (paper.height - 130) / 2
     })
 
     entity.on("change", function (changes) {
