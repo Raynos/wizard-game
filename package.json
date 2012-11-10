@@ -4,9 +4,9 @@
   "description": "teh_wizzards_of_streamz",
   "main": "server.js",
   "scripts": {
-    "build-dev": "node_modules/.bin/browserify client.js -o static/bundle.js --debug",
-    "build-dev-watch": "node_modules/.bin/browserify client.js -o static/bundle.js --debug --watch --verbose",
-    "build": "node_modules/.bin/browserify client.js -o static/bundle.js",
+    "build-dev": "node_modules/.bin/browserify browser/client.js -o static/bundle.js --debug",
+    "build-dev-watch": "node_modules/.bin/browserify browser/client.js -o static/bundle.js --debug --watch --verbose",
+    "build": "node_modules/.bin/browserify browser/client.js -o static/bundle.js",
     "start": "server.js"
   },
   "repository": {
