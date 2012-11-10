@@ -1,6 +1,6 @@
 var once = require("once")
 
-var Player = require("./player")
+var Player = require("../entities/player")
 
 module.exports = renderPlayer
 
