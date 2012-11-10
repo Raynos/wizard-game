@@ -17,8 +17,8 @@ function World(model) {
     var world = screen(center, 600, 480)
 
     model.on("create", renderEntity)
-
-    return center
+    world.center = center
+    return world
 
     function renderEntity(row) {
         var state = row.state
@@ -47,6 +47,10 @@ function World(model) {
             var alive = true
 
             var entity = entities[type](paper, relative)
+
+            entity.node.addEventListener('click', function (e) {
+                world.emit('examine', row)
+            })
 
             row.on("change", function (changes) {
                 absolute(changes)

@@ -10,7 +10,7 @@ module.exports = UI
 
 function UI(doc) {
     var login = Login()
-    World(doc)
+    var world = World(doc)
 
     var player = {
         id: "human:" + NAME.name
@@ -32,6 +32,19 @@ function UI(doc) {
     })
 
     document.body.appendChild(login.root)
+
+    var ta = document.createElement('textarea')
+    ta.style.position = 'absolute'
+    ta.style.top = '40px'
+    ta.style.left = '620px'
+    ta.style.width = '400px'
+    ta.style.height = '480px'
+    document.body.appendChild(ta)
+
+    world.on('examine', function (entity) {
+      console.log(entity)
+      ta.innerText = JSON.stringify(entity.toJSON())
+    })
 
     login.on("name", function (name) {
         console.log("name", name)
