@@ -9,6 +9,7 @@ body {
     color: cyan;
     padding-top: 4px;
     padding-left: 4px;
+    height: 35px;
 }
 
 .top .key {
@@ -29,20 +30,110 @@ svg {
 
 .code {
     position: absolute;
-    top: 40px;
-    right: 0;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+
+    top: 37px;
+    right: 0px;
     width: 396px;
-    bottom: 30%;
+    bottom: 300px;
     font-size: 12pt;
+}
+
+.json {
+    display: none;
+
+    position: absolute;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+
+    top: 37px;
+    right: 0px;
+    width: 396px;
+    bottom: 300px;
+    font-size: 12pt;
+}
+
+.error {
+    background-color: rgb(255,220,180)
+}
+
+.tabs {
+    position: absolute;
+    right: 0px;
+    width: 400px;
+    height: 30px;
+    bottom: 272px;
+    font-size: 12pt;
+    background-color: rgb(50,30,20);
+
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+}
+
+.tab {
+    display: inline-block;
+    background-color: rgb(220,220,220);
+    font-size: 15px;
+    height: 1em;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
+.tab:hover {
+    background-color: rgb(240,255,120);
+}
+
+.tab.active {
+    background-color: rgb(200,255,120);
+}
+
+.cast {
+    background-color: rgb(220,100,20);
+    position: absolute;
+    right: 4px;
+    width: 50px;
+    text-align: center;
+    color: rgb(255,220,180);
+}
+
+.cast:hover {
+    background-color: rgb(255,200,100);
+    color: rgb(100,40,20);
+}
+
+.cast.disable {
+    background-color: rgb(120,120,120);
+    color: rgb(200,200,200);
 }
 
 .display {
     position: absolute;
-    top: 71%;
-    right: 0;
-    width: 396px;
-    bottom: 0;
+    right: 0px;
+    width: 400px;
+    height: 271px;
+    bottom: -15px;
     font-size: 12pt;
+    
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+    background-color: white;
+    overflow: auto;
 }
 
 .repl {

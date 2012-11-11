@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 module.exports = createSprite
 
 function createSprite (paper, relative, opts) {
-    var hidden = true, prev = null
+    var hidden = true
     var row = opts.row
     var files = opts.files
     var computeKey = opts.computeKey || String;
@@ -42,43 +42,7 @@ function createSprite (paper, relative, opts) {
  
     var lastPos = { x : row.state.x, y : row.state.y }
 
-    row.on('change', function (ch) {
-        if (ch.color) { onhide(); hidden = false; animate(true) }
-        if (ch.message && typeof ch.message === 'object') {
-            messageText.attr('text', String(ch.message.text || ''))
-            messageText.attr('stroke', ch.message.stroke || 'red')
- 
-            if (ch.message.fill) {
-                messageBack.attr('fill', 'rgba(0,0,0,1)') // reset opacity
-                messageBack.attr('fill', ch.message.fill)
-                resizeMessage()
-            }
-            else messageBack.attr('fill', 'transparent')
-        }
- 
-        var delta = {
-            x: lastPos.x - row.state.x
-            , y: lastPos.y - row.state.y
-        }
-        if (delta.x === 0 && delta.y === 0) return
- 
-        lastPos = ch
- 
-        var key = ''
-        if (delta.x) key = 'x' + (delta.x > 0 ? 1 : -1)
-        else if (delta.y) key = 'y' + (delta.y > 0 ? 1 : -1)
- 
-        var d = {
-            'x1': 'left'
-            , 'x-1': 'right'
-            , 'y-1': 'front'
-            , 'y1' : 'back'
-        }[key]
- 
-        entity.last = Date.now()
-        if (entity.direction !== d) animate()
-        entity.direction = d
-    })
+    row.on('change', onchange)
   
     if (relative.on) {
         relative.on('visible', onvisible)
@@ -101,15 +65,17 @@ function createSprite (paper, relative, opts) {
         return acc
     }, {})
  
+    var prev = sprites[computeKey(entity.direction)][0].show()
     var animate = (function () {
         var ix = 0
         return function (override) {
             if (hidden) return
             if (override || Date.now() - entity.last < 100) {
-                if (prev) prev.hide()
                 var xs = sprites[computeKey(entity.direction)]
-                if (!xs) return
-                prev = xs[++ix % xs.length].show()
+                if (xs) {
+                    if (prev) prev.hide()
+                    prev = xs[++ix % xs.length].show()
+                }
             }
         }
     })()
@@ -153,8 +119,10 @@ function createSprite (paper, relative, opts) {
     function onvisible() {
         hidden = false
         var xs = sprites[computeKey(entity.direction)]
-        if (prev) prev.hide()
-        if (xs) prev = xs[0].show()
+        if (xs) {
+            if (prev) prev.hide()
+            prev = xs[0].show()
+        }
         
         messageText.show()
         messageBack.show()
@@ -170,5 +138,49 @@ function createSprite (paper, relative, opts) {
 
         messageText.hide()
         messageBack.hide()
+    }
+
+    function onchange (ch) {
+        if (ch.color) {
+            if (prev) prev.hide()
+            prev = sprites[computeKey(entity.direction)][0].show()
+        }
+        
+        if (ch.message && typeof ch.message === 'object') {
+            messageText.attr('text', String(ch.message.text || ''))
+            messageText.attr('stroke', ch.message.stroke || 'red')
+ 
+            if (ch.message.fill) {
+                messageBack.attr('fill', 'rgba(0,0,0,1)') // reset opacity
+                messageBack.attr('fill', ch.message.fill)
+                resizeMessage()
+            }
+            else messageBack.attr('fill', 'transparent')
+        }
+ 
+        if (ch.x === undefined || ch.y === undefined) return
+
+        var delta = {
+            x: lastPos.x - row.state.x
+            , y: lastPos.y - row.state.y
+        }
+        if (delta.x === 0 && delta.y === 0) return
+ 
+        lastPos = ch
+ 
+        var key = ''
+        if (delta.x) key = 'x' + (delta.x > 0 ? 1 : -1)
+        else if (delta.y) key = 'y' + (delta.y > 0 ? 1 : -1)
+ 
+        var d = {
+            'x1': 'left'
+            , 'x-1': 'right'
+            , 'y-1': 'front'
+            , 'y1' : 'back'
+        }[key]
+ 
+        entity.last = Date.now()
+        if (entity.direction !== d) animate()
+        entity.direction = d
     }
 }

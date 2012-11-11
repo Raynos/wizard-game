@@ -41,10 +41,14 @@ function TopBar(row) {
         if (color === NAME.color) setActive()
     })
 
+    row.on('change', function (ch) {
+        if (ch.magic) elements.magic.textContent = JSON.stringify(ch)
+    })
+    
     submit(elements.field, elements.button, function (value) {
         NAME.displayName = value
         component.emit("name", value)
-        NAME.emit('name')
+        NAME.emit('name', value)
     })
 
     NAME.on('name', function (name) {

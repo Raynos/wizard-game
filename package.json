@@ -1,6 +1,6 @@
 {
   "name": "nko3-teh-wizzards-of-stre",
-  "version": "0.0.3-3",
+  "version": "0.0.3-4",
   "description": "teh_wizzards_of_streamz",
   "main": "server.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build-dev-watch": "node_modules/.bin/browserify browser/client.js -o static/bundle.js --debug --watch --verbose",
     "build": "node_modules/.bin/browserify browser/client.js -o static/bundle.js",
     "live-reload": "live-reload --delay=1000",
-    "start": "server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,8 @@
     "once": "~1.1.1",
     "point-generator": "~0.1.0",
     "deck": "0.0.4",
-    "idle": "0.0.0"
+    "idle": "0.0.0",
+    "deep-equal": "~0.0.0"
   },
   "engines": {
     "node": "0.8.x"
