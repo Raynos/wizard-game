@@ -9,6 +9,7 @@ body {
     color: cyan;
     padding-top: 4px;
     padding-left: 4px;
+    height: 35px;
 }
 
 .top .key {
@@ -29,20 +30,32 @@ svg {
 
 .code {
     position: absolute;
-    top: 40px;
-    right: 0;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+
+    top: 37px;
+    right: 0px;
     width: 396px;
-    bottom: 30%;
+    bottom: 300px;
     font-size: 12pt;
 }
 
 .display {
     position: absolute;
-    top: 71%;
-    right: 0;
-    width: 396px;
-    bottom: 0;
+    right: 0px;
+    width: 400px;
+    height: 296px;
+    bottom: -17px;
     font-size: 12pt;
+    
+    border-width: 4px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-right-width: 0px;
+    background-color: white;
+    overflow: auto;
 }
 
 .repl {
