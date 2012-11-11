@@ -1,23 +1,71 @@
 module.exports = Entity
 
+//the Row should be passed in here...
 function Entity(paper, relative) {
     var entity = paper.rect()
+//  var bounds = paper.circle()
     var sayText
+
     entity.hide()
-    entity.attr("height", 10)
-    entity.attr("width", 10)
+    entity.attr("height", 50)
+    entity.attr("width", 50)
+
+//    bounds.hide()
+//    entity.attr("r", 50)
+//    bounds.attr("fill", "grey")
+
+
+    /*
+      Raynos, this stuff is weird.
+      it would be easier to understand if it was more procedural.
+
+      I want to access the model here... but instead I just have this
+      screen point thing.
+
+      something this:
+
+      row.on('change', function () {
+
+        if(screen.isVisible(row)) {
+          view.attr('x', screen.rel('x', row.get('x')))
+          view.attr('y', screen.rel('y', row.get('y')))
+          view.show()
+        }
+        else
+          view.hide()
+
+      })
+
+      would be WAY more obvious.
+
+      also, it means when I want to draw something else from the 
+      model... like the bounding box,
+      I can just get that straight off the row...
+      
+      but using this pattern, two files must be edited,
+      because I've you've added setSay to the view (entity)
+      and then somewhere else, you call it.
+
+      basically, you've got M, V, and MVcombiner
+
+    */
 
     relative.on("visible", onvisible)
 
     relative.on("invisible", onhide)
 
     var remove = relative(function (pos) {
-        entity.attr("x", pos.x)
-        entity.attr("y", pos.y)
+
+//      console.log('REL', pos.x, pos.y)
+//      bounds.attr("x", pos.x)
+//      bounds.attr("y", pos.y)
+
+        entity.attr("x", pos.x - 25)
+        entity.attr("y", pos.y - 25)
 
         if (sayText) {
-            sayText.attr("x", pos.x + 5)
-            sayText.attr("y", pos.y - 10)
+            sayText.attr("x", pos.x + 20)
+            sayText.attr("y", pos.y - 15)
         }
     })
 
@@ -35,13 +83,14 @@ function Entity(paper, relative) {
     }
 
     function onvisible() {
+//      bounds.show()
         entity.show()
     }
 
     function onhide() {
+    //    bounds.hide()
         entity.hide()
     }
-
 
     function setSay(name) {
         if (!sayText) {

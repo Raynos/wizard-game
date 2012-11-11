@@ -18,14 +18,14 @@ function renderPlayer(paper, absolute, row) {
     })
 
     var entity = Player(paper, {
-        x: row.state.x || (paper.width - 80) / 2
+          x: row.state.x || (paper.width - 80) / 2
         , y: row.state.y || (paper.height - 130) / 2
     }, row)
 
     var speed = 5
     entity.on("change", function (changes) {
         var pos = {
-            x: absolute.x
+              x: absolute.x
             , y: absolute.y
         }
 
