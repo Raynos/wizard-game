@@ -50,9 +50,9 @@ function createSprite (paper, relative, opts) {
  
     relative(function (pos) {
         Object.keys(sprites).forEach(function (key) {
-            sprites[key].forEach(function (sprite) {
-                sprite.attr('x', pos.x)
-                sprite.attr('y', pos.y)
+            sprites[key].forEach(function (sprite, ix) {
+                sprite.attr('x', pos.x - files[key][ix].width / 2)
+                sprite.attr('y', pos.y - files[key][ix].height / 2)
             })
         })
     })
