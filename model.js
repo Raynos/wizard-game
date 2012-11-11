@@ -59,7 +59,7 @@ function api (row) {
       var _x = row.get('x') + x
         , _y = row.get('y') + y;
 
-//      console.log('['+_x+', '+_y+']--'+row.get('id'))
+//    console.log('['+_x+', '+_y+']--'+row.get('id'))
 
       row.set('x', _x)
       row.set('y', _y)
@@ -97,16 +97,36 @@ function api (row) {
       //transfer energy to another ID
 
       amt = amt || 1
-      var other = model.rows[id]
+      var other = model.rows[id], back
       if(!other) return
 
       //transfer energy to the other...
       //other.set('energy', other.get('energy') + amt)
 
-      //aha! you curse them,
-      //and then they might curse you back,
-      //that will emit curse events,
+      if(isFunction(other._cursed))
+        back = other._cursed(self.id(), amt) || 0
+      else
+        //just give in if you don't refuse.
+        back = amt * -1
+
+      amt = amt * Math.random()
+      back = back * Math.random()
+
+      //okay, you can attack + or -
+      //what if the user gives in?
       //
+      var diff
+      if(amt > 0 && back > 0) {
+        //the winner gains the diff,
+        //the looser looses the diff
+        diff = amt - back
+      } else {
+        diff = (amt - back) / 2
+      }
+
+      row.set('energy', row.get('energy') + diff)
+      energy.set('energy', energy.get('energy') + diff)
+
     },
 
     //a curse is just a negative blessing.
@@ -117,9 +137,11 @@ function api (row) {
     cursed: function (func) {
       //when you are cursed, curse them back.
       //or bless them back... whatever...
+      row._cursed = func
       /*
-        function (other, amt) {
-
+        function (id, amt) {
+          return amt //to do battle...
+          return -1 //to give in.
         }
       */
     }
@@ -163,6 +185,7 @@ function rock() {
 
 //this function is eval'd (the user will enter it as text...)
 /*global self*/
+
 function init () {
   self.say('hello')
   self.think(function () {
