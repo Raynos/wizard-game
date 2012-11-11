@@ -5,22 +5,21 @@ var wrap = require("../../wrap")
 module.exports = PlayerRepl
 
 function PlayerRepl(row) {
-    var div = document.createElement("div")
+    var div = document.createElement("input")
     div.className = "repl"
     document.body.appendChild(div)
 
-    if (typeof ace === 'undefined') return;
- 
-    var editor = ace.edit(div)
-    var session = editor.getSession()
+    div.onkeyup = function (e) {
+        if(e.keyCode == 13) { //enter
+            row.set('message', {
+                text: e.target.value,
+                fill : 'blue',
+                stroke : 'yellow'  
+            })
+        }
+    }
 
-    // console.log("ace", ace, editor, session)
-
-    editor.setTheme("ace/theme/monokai")
-    session.setMode("ace/mode/javascript")
-
-    editor.textInput.blur()
-
+/*
     console.log("editor", editor)
 
     editor.commands.addCommand({
@@ -39,4 +38,6 @@ function PlayerRepl(row) {
         editor.setValue("")
         editor.textInput.blur()
     }
+*/
+
 }

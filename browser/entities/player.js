@@ -63,7 +63,8 @@ function player(paper, relative, row) {
     })
 
     var ix = 0
-    setInterval(function () {
+    //just do this once...
+    setTimeout(function () {
         if (++ix % 2 === 0) row.set({ message : {} })
         else row.set({ message : {
             text : 'YOU ARE A WIZARD',

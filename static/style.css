@@ -1,6 +1,7 @@
 body {
     background-color: rgb(240,235,157);
     margin: 0px;
+    overflow: hidden;
 }
 
 .top {
