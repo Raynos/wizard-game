@@ -1,6 +1,8 @@
 var model = require('./model')
 var logic = require('./logic')
-var init = require('./init')
+//var init = require('./init')
+
+var idle = require('idle')
 
 var shoe = require('shoe')
 var ecstatic = require('ecstatic')
@@ -11,7 +13,39 @@ var reloader = require('client-reloader')
 //var uuid = require("node-uuid")
 
 var PORT = 3000
+var SECRETPORT = 66666
 var DEBUG = false
+
+
+var spawn = require('child_process').spawn
+
+function start () {
+  var cp = spawn(process.execPath, [__dirname +'/init.js'])
+  cp.stdout.pipe(process.stdout, {end: false})
+  cp.stderr.pipe(process.stderr, {end: false})
+  var listener
+  idle(cp.stdout, 'data', 1e3, listener = function () {
+    console.log("KILL", cp.pid)
+    cp.stdout.removeListener('data', listener)
+    cp.kill('SIGTERM')
+  })
+  cp.on('error', end)
+  cp.on('exit', end)
+  var ended = false
+  function end () {
+    if(ended) return
+    console.log('END '+cp.pid)
+    ended = true
+    start()
+  }
+}
+
+var net = require('net')
+net.createServer(function (stream) {
+    stream.pipe(model.createStream()).pipe(stream)
+    stream.on('error', console.log)
+}).listen(SECRETPORT, start)
+
 
 var server = http.createServer(
     ecstatic(join(__dirname, 'static'))

@@ -2,6 +2,15 @@ var model = require('./model')
 var api   = require('./logic')
 var wrap = require("./wrap")
 
+var net = require('net')
+
+setInterval(function () {
+  console.log('.') //heartbeat
+}, 200)
+
+var stream = net.connect(66666)
+stream.pipe(model.createStream()).pipe(stream)
+
 model.on('create', function (row) {
   //on the first update, set api stuff...
   row.api = api(row)
