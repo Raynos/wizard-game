@@ -1,4 +1,5 @@
 var model = require('./model')
+var logic = require('./logic')
 
 var shoe = require('shoe')
 var ecstatic = require('ecstatic')
@@ -60,6 +61,9 @@ function mock(model) {
     model.create('rock')
 
 
+    model.create('monster')
+    model.create('monster')
+    model.create('monster')
     model.create('monster')
 
 }
