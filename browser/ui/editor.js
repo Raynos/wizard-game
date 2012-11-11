@@ -54,5 +54,4 @@ function Display(world) {
       if(log.childNodes.length > 5)
         log.removeChild(log.firstChild)
     })
-
 }
