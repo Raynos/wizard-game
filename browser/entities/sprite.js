@@ -2,38 +2,65 @@ var EventEmitter = require('events').EventEmitter;
 
 module.exports = createSprite
 
-function createSprite (paper, relative, files) {
+function createSprite (paper, relative, opts) {
+    var hidden = true, prev = null
+    var direction = 'front'
+    var last = Date.now
+    
+    var entity = new EventEmitter
+    entity.cleanup = cleanup
+    entity.color = opts.color || 'purple'
+ 
+    var animate = (function () {
+        var ix = 0
+        return function (override) {
+            if (hidden) return
+            if (override || Date.now() - last < 100) {
+                if (prev) prev.hide()
+                var xs = sprites[computeKey(direction)]
+                prev = xs[++ix % xs.length].show()
+            }
+        }
+    })()
+    animate(true)
+    setInterval(animate, 200)
+ 
     relative.on('visible', onvisible)
     relative.on('invisible', onhide)
  
+    var files = opts.files
+    var computeKey = opts.computeKey || String;
+
     var sprites = Object.keys(files).reduce(function (acc, key) {
-        var im = paper.image(
-            files[key].file,
-            relative.x, relative.y,
-            files[key].width, files[key].height
-        ).hide()
-        
-        im.node.addEventListener('click', function (ev) {
-            entity.emit('click', ev)
+        acc[key] = files[key].map(function (r) {
+            var im = paper.image(
+                r.file, relative.x, relative.y,
+                r.width, r.height
+            ).hide()
+     
+            im.click(function (ev) {
+                entity.emit('click', ev)
+            })
+            return im
         })
-        
-        acc[key] = im
         return acc
     }, {})
 
-    var direction
     var cancel = relative(function (pos) {
         var delta
         
-        Object.keys(images).forEach(function (key, ix) {
+        Object.keys(sprites).forEach(function (key, ix) {
             if (ix === 0) {
                 delta = {
-                    x : pos.x - images[key].attr('x'),
-                    y : pos.y - images[key].attr('y')
+                    x : pos.x - sprites[key][0].attr('x'),
+                    y : pos.y - sprites[key][0].attr('y')
                 }
             }
-            images[key].attr('x', pos.x)
-            images[key].attr('y', pos.y)
+            
+            sprites[key].forEach(function (sprite) {
+                sprite.attr('x', pos.x)
+                sprite.attr('y', pos.y)
+            })
             
             var dir = {
                 '1,0' : 'right',
@@ -43,26 +70,13 @@ function createSprite (paper, relative, files) {
             }[delta.x + ',' + delta.y]
             
             if (!dir) return
+ 
+            last = Date.now()
             if (direction !== dir) animate()
             direction = dir
         })
     })
- 
-    var animate = (function () {
-        var prev = null
-        var ix = 0
-        return function () {
-            if (Date.now() - last < 100) {
-                if (prev) prev.hide()
-                prev = sprites[computeKey(direction)][++ix % 2].show()
-            }
-        }
-    })()
-    animate()
-    setInterval(animate, 200)
 
-    var entity = new EventEmitter
-    entity.cleanup = cleanup
     return entity
 
     function cleanup() {
@@ -73,10 +87,12 @@ function createSprite (paper, relative, files) {
     }
 
     function onvisible() {
-        entity.show()
+        hidden = false
+        animate(true)
     }
 
     function onhide() {
-        entity.hide()
+        hidden = true
+        if (prev) prev.hide()
     }
 }
