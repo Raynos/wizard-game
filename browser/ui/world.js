@@ -87,10 +87,6 @@ function World(model) {
         row.on("change", function (changes) {
             absolute(changes)
 
-            if (changes.say) {
-                entity.setSay(changes.say)
-            }
-
             if (changes.dead) {
                 alive = false
                 entity.cleanup()
