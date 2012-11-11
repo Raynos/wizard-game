@@ -77,6 +77,7 @@ function api (row) {
   }
 
   var thinker = null, hearer = null
+
   function createListener (event, wrapper) {
     wrapper = wrapper || function (l) {
       return l
@@ -198,12 +199,6 @@ function api (row) {
       //when you are cursed, curse them back.
       //or bless them back... whatever...
       row._cursed = safe(func)
-      /*
-        function (id, amt) {
-          return amt //to do battle...
-          return -1 //to give in.
-        }
-      */
     }
 
   }
