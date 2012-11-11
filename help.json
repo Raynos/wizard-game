@@ -28,4 +28,8 @@
   , "Pass in the id of another thing and"
   , "get the x,y distance of it. Useful"
   , "to move to them"
+  , ""
+  , "Try `self.move(self.whatDist(id))`"
+  , ""
+  , "## self.move(x,y)"
 ]

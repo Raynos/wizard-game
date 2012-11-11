@@ -26,11 +26,14 @@ function right(r, radius) {
 }
 
 function dist (a, b) {
-  a = model.get(a)
-  b = model.get(b)
+  a = a.get ? a : model.get(a)
+  b = b.get ? b : model.get(b)
   var x = a.get('x') - b.get('x')
   var y = a.get('y') - b.get('y')
   var l = Math.sqrt(x*x+y*y)
+
+  // console.log("x", x, "y", y, a.state, b.state)
+
   return {x: x, y: y, length: l}
 }
 
@@ -109,7 +112,9 @@ function api (row) {
       other = model.rows[other]
 
       if(!other) return
-      return dist(row, other)
+      var coord = dist(other, row)
+      // console.log("c", coord)
+      return coord
     },
 
     set: function () {
