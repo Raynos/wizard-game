@@ -80,17 +80,8 @@ function World(model) {
             world.emit('examine', row)
         }
 
-        if (pos.say && entity.setSay) {
-            entity.setSay(pos.say)
-        }
-
         row.on("change", function (changes) {
             absolute(changes)
-
-            if (changes.say) {
-              console.log('SAY', changes.say)
-                entity.setSay(changes.say)
-            }
 
             if (changes.dead) {
                 alive = false

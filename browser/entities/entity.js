@@ -1,3 +1,10 @@
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+// THIS FILE IS DEPRECATED, STOP EDITING IT
+//
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 module.exports = Entity
 
 //the Row should be passed in here...

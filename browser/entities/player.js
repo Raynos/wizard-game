@@ -40,9 +40,9 @@ function player(paper, relative, row) {
     keys.on('change', function (coords) {
         var key = ""
         if (coords.x) {
-            key = "x" + coords.x
+            key = "x" + (coords.x > 0 ? 1 : -1)
         } else if (coords.y) {
-            key = "y" + coords.y
+            key = "y" + (coords.y > 0 ? 1 : -1)
         }
         else return
 

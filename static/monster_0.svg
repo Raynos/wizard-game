@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="monster_0.svg">
+   sodipodi:docname="monster_0.svg"
+   inkscape:export-filename="/home/substack/projects/wizard-game/static/monster_0.png"
+   inkscape:export-xdpi="26.940001"
+   inkscape:export-ydpi="26.940001">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -22,7 +25,7 @@
      pagecolor="#f1dcb9"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="1"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
      inkscape:cx="249.92967"
@@ -31,9 +34,9 @@
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1364"
-     inkscape:window-height="766"
+     inkscape:window-height="382"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="384"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"

@@ -20,7 +20,9 @@ function createSprite (paper, relative, opts) {
 
     var messageText = paper.text(
         relative.x + files[Object.keys(opts.files)[0]][0].width / 2,
-        relative.y - 10, row.state.message && row.state.message.text
+        relative.y - 10,
+        row.state.message && row.state.message.text
+        ? row.state.message.text : ''
     )
 
     function resizeMessage () {
@@ -63,8 +65,8 @@ function createSprite (paper, relative, opts) {
         lastPos = ch
  
         var key = ''
-        if (delta.x) key = 'x' + delta.x
-        else if (delta.y) key = 'y' + delta.y
+        if (delta.x) key = 'x' + (delta.x > 0 ? 1 : -1)
+        else if (delta.y) key = 'y' + (delta.y > 0 ? 1 : -1)
  
         var d = {
             'x1': 'left'

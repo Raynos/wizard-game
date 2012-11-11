@@ -13,9 +13,9 @@ function wizard(paper, relative, row) {
  
             for (var i = 0; i < 2; i++) {
                 acc[key].push({
-                    file : '/wizard_' + key + '_' + i + '.svg'
+                    file : '/wizard_' + key + '_' + i + '.png'
                     , width : 86
-                    , height : 133
+                    , height : 135
                 })
             }
         })

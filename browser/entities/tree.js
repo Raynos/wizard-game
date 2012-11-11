@@ -6,7 +6,7 @@ function tree(paper, relative, row) {
     
     var entity = Sprite(paper, relative, {
         files : { tree : [
-            { file : '/tree.svg', width: 121, height : 282 }
+            { file : '/tree.png', width: 121, height : 281 }
         ] }
         , computeKey : function () { return 'tree' }
         , row : row
