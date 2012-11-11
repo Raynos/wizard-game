@@ -22,6 +22,21 @@ function createSprite (paper, relative, opts) {
         relative.x + files[Object.keys(opts.files)[0]][0].width / 2,
         relative.y - 10, row.state.message && row.state.message.text
     )
+
+    function resizeMessage () {
+        var s = messageText.attr('text')
+
+        var cols = Math.max.apply(null, s.split('\n')
+            .map(function (line) { return line.length })
+        )
+        var rows = s.split('\n').length
+        var w = cols * 8, h = rows * 12
+
+        messageBack.attr('width', w)
+        messageBack.attr('height', h)
+        messageBack.attr('x', messageText.attr('x') - w / 2)
+        messageBack.attr('y', messageText.attr('y') - h / 2)
+    }
  
     var lastPos = { x : row.state.x, y : row.state.y }
 
@@ -32,20 +47,9 @@ function createSprite (paper, relative, opts) {
             messageText.attr('stroke', ch.message.stroke || 'red')
  
             if (ch.message.fill) {
-                var s = messageText.attr('text')
                 messageBack.attr('fill', 'rgba(0,0,0,1)') // reset opacity
                 messageBack.attr('fill', ch.message.fill)
-
-                var cols = Math.max.apply(null, s.split('\n')
-                    .map(function (line) { return line.length })
-                )
-                var rows = s.split('\n').length
-                var w = cols * 8, h = rows * 12
-
-                messageBack.attr('width', w)
-                messageBack.attr('height', h)
-                messageBack.attr('x', messageText.attr('x') - w / 2)
-                messageBack.attr('y', messageText.attr('y') - h / 2)
+                resizeMessage()
             }
             else messageBack.attr('fill', 'transparent')
         }
@@ -122,6 +126,10 @@ function createSprite (paper, relative, opts) {
                 sprite.attr('y', pos.y - files[key][ix].height / 2)
             })
         })
+
+        messageText.attr('x', pos.x)
+        messageText.attr('y', pos.y - 80)
+        resizeMessage()
     }
     
     function cleanup() {
