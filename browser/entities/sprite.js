@@ -26,7 +26,7 @@ function createSprite (paper, relative, opts) {
         }
     })()
     animate(true)
-    setInterval(animate, 100)
+    var iv = setInterval(animate, 100)
  
     var lastPos = { x : row.state.x, y : row.state.y }
 
@@ -87,6 +87,8 @@ function createSprite (paper, relative, opts) {
     return entity
     
     function cleanup() {
+        clearInterval(iv)
+ 
         row.removeListener('change', onchange)
         relative.removeListener('visible', onvisible)
         relative.removeListener('invisible', onhide)
