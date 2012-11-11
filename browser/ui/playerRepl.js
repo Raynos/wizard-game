@@ -13,7 +13,7 @@ function PlayerRepl(row) {
     div.onkeyup = function (e) {
         if(e.keyCode == 13) { //enter
             row.set('message', {
-                text: e.target.value
+                text: e.target.value,
                 fill : 'blue',
                 stroke : 'yellow'  
             })
