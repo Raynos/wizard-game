@@ -26,12 +26,12 @@ function createSprite (paper, relative, opts) {
         }
     })()
     animate(true)
-    setInterval(animate, 200)
+    setInterval(animate, 100)
  
     var lastPos = { x : row.state.x, y : row.state.y }
 
     row.on('change', function (ch) {
-        if (ch.color) { onhide(); onvisible() }
+        if (ch.color) { onhide(); hidden = false; animate(true) }
  
         var delta = {
             x: lastPos.x - row.state.x
@@ -100,8 +100,9 @@ function createSprite (paper, relative, opts) {
 
     function onvisible() {
         hidden = false
-        var key = Object.keys(sprites)[0]
-        sprites[key][0].show()
+        var xs = sprites[computeKey(direction)]
+        if (prev) prev.hide()
+        if (xs) prev = xs[0].show()
     }
 
     function onhide() {
