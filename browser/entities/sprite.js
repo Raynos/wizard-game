@@ -20,7 +20,9 @@ function createSprite (paper, relative, opts) {
 
     var messageText = paper.text(
         relative.x + files[Object.keys(opts.files)[0]][0].width / 2,
-        relative.y - 10, row.state.message && row.state.message.text
+        relative.y - 10,
+            row.state.message && row.state.message.text
+            ? row.state.message.text : ''
     )
 
     function resizeMessage () {
