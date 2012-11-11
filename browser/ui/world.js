@@ -74,11 +74,16 @@ function World(model) {
         var relative = world.add(absolute)
         var alive = true
 
-        var entity = entities[type](paper, relative)
+        var entity = entities[type](paper, relative, row)
 
-        entity.node.addEventListener('click', function (e) {
+        if (entity.node && entity.node.addEventListener) {
+            entity.node.addEventListener('click', onclick)
+        }
+        else entity.on('click', onclick)
+ 
+        function onclick (e) {
             world.emit('examine', row)
-        })
+        }
 
         row.on("change", function (changes) {
             absolute(changes)

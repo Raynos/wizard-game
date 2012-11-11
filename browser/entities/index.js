@@ -1,6 +1,6 @@
 module.exports = {
     tree: require("./tree")
     , rock: require("./rock")
-    , human: require("./human")
+    , wizard: require("./wizard")
     , monster: require("./monster")
 }
