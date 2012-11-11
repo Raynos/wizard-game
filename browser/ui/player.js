@@ -7,7 +7,9 @@ module.exports = Player
 function Player(paper, relative) {
     var x = relative.x, y = relative.y
     var w = 86, h = 133
-    
+    var nameText
+    var sayText
+
     var directions = [ 'front', 'back', 'left', 'right' ]
     var colors = [ 'purple', 'green', 'orange' ]
     var sprites = colors.reduce(function (s, color) {
@@ -62,5 +64,25 @@ function Player(paper, relative) {
     animate(true)
     setInterval(animate, 100)
 
+    keys.setName = setName
+    keys.setSay = setSay
+
     return keys
+
+    function setName(name) {
+        if (!nameText) {
+            nameText = paper.text(x + 50, y - 10, name)
+        } else {
+            nameText.attr("text", name)
+        }
+    }
+
+    function setSay(name) {
+        if (!sayText) {
+            sayText = paper.text(x + 50, y - 30, name)
+            sayText.attr("fill", "red")
+        } else {
+            sayText.attr("text", name)
+        }
+    }
 }

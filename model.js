@@ -4,6 +4,8 @@ var uuid = require("node-uuid")
 
 var wrap = require('./wrap')
 
+model.api = api
+
 model.create = function (type) {
     console.log('create', type)
     return model.add({
@@ -68,7 +70,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      console.log('THINK')
+      // console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if(isFunction(think))
@@ -132,8 +134,8 @@ function api (row) {
 model.on('create', function (row) {
   //on the first update, set api stuff...
   row.once('update', function () {
-    console.log('create', row.toJSON())
-      console.log(row)
+    // console.log('create', row.toJSON())
+      // console.log(row)
     if(row.get('type') == 'monster')
       wrap(init)(api(row))
 
