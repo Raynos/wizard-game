@@ -75,7 +75,6 @@ function ArrowKeys(fps, source) {
 
     function ignore (ev) {
         var t = ev.target
-        console.dir(t.tagName)
         return t.tagName === 'INPUT' || t.tagName === 'TEXTAREA'
     }
 }
