@@ -122,10 +122,10 @@ function mock(model) {
     model.create('rock')
 
 
-    // model.create('monster')
-    // model.create('monster')
-    // model.create('monster')
-    // model.create('monster')
+    model.create('monster')
+    model.create('monster')
+    model.create('monster')
+    model.create('monster')
 
 }
 
