@@ -5,12 +5,13 @@ body {
 
 .top {
     background-color: rgb(50,30,20);
+    color: cyan;
     padding-top: 4px;
     padding-left: 4px;
 }
 
 .top .key {
-    color: gray;
+    color: magenta;
 }
 
 .top .value {

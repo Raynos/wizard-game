@@ -72,5 +72,9 @@ function player(paper, relative, row) {
         }})
     }, 1000)
  
+    entity.setName = function (name) {
+        NAME.emit('name', name)
+    }
+ 
     return entity
 }
