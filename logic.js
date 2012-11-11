@@ -117,7 +117,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      console.log('THINK')
+      //console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if(isFunction(think))
@@ -213,9 +213,7 @@ model.on('create', function (row) {
       var fn
       if(ch.source) {
         try {
-          console.log(ch.source)
           fn = wrap(ch.source)(row.api)
-          console.log('applied')
         } catch (err) {
           console.error(err, ch.source)
         }
