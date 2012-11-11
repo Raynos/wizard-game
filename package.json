@@ -37,7 +37,9 @@
     "point-generator": "~0.1.0",
     "deck": "0.0.4",
     "idle": "0.0.0",
-    "deep-equal": "~0.0.0"
+    "deep-equal": "~0.0.0",
+    "event-stream": "~3.0.7",
+    "through": "~1.1.1"
   },
   "engines": {
     "node": "0.8.x"

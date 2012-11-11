@@ -18,16 +18,43 @@ var DEBUG = false
 
 
 var spawn = require('child_process').spawn
+var split = require('event-stream').split
+var through = require('through')
 
 function start () {
   var cp = spawn(process.execPath, [__dirname +'/init.js'])
   cp.stdout.pipe(process.stdout, {end: false})
+
+  var lastId = null
+  cp.stdout.pipe(split()).pipe(through(function (line) {
+    try { var msg = JSON.parse(line) }
+    catch (e) { return }
+  
+    if (!msg || !msg.length) return // heartbeat or noise
+    if (msg[0] === 'start') {
+      lastId = msg[1]
+    }
+    if (msg[0] === 'end') {
+      lastId = null
+    }
+    if (msg[0] === 'error') {
+      lastId = null
+    }
+  }))
+
   cp.stderr.pipe(process.stderr, {end: false})
+
   var listener
   idle(cp.stdout, 'data', 1e3, listener = function () {
     console.log("KILL", cp.pid)
     cp.stdout.removeListener('data', listener)
     cp.kill('SIGTERM')
+
+    if (lastId) {
+      console.log('marking ' + lastId + ' as not runnable')
+      // mark the process that didn't exit as bad...
+      model.get(lastId).set('run', false)
+    }
   })
   cp.on('error', end)
   cp.on('exit', end)

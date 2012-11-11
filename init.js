@@ -1,6 +1,6 @@
 var model = require('./model')
 var api   = require('./logic')
-var wrap = require("./wrap")
+var vm = require('vm')
 
 var net = require('net')
 
@@ -8,7 +8,7 @@ setInterval(function () {
   //don't remove this, this is how the server knows that
   //this process is still alive (not inifinte looping)
   
-  process.stdout.write('.') //heartbeat
+  process.stdout.write('[]\n') //heartbeat
 }, 500)
 
 var stream = net.connect(66666)
@@ -23,16 +23,21 @@ model.on('create', function (row) {
     var _fn
     row.on('change', function (ch) {
       var fn
-      if(ch.source || ch.cast) {
+      if(ch.source || ch.cast && row.state.run !== false) {
+        console.log(JSON.stringify([ 'start', row.id ]))
         try {
-          fn = wrap(ch.source || ch.cast)(row.api)
+          fn = vm.runInNewContext(ch.source || ch.cast, {
+            self : row.api
+          })
         } catch (err) {
           row.set('message', {
             text: err.toString(),
             stroke: 'red', fill: 'black'
           })
-          console.log(row.id, err)
+          console.log(JSON.stringify([ 'error', row.id, String(err) ]))
+          return
         }
+        console.log(JSON.stringify([ 'end', row.id ]))
       }
     })
 

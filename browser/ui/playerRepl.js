@@ -1,5 +1,3 @@
-var wrap = require("../../wrap")
-
 module.exports = PlayerRepl
 
 function PlayerRepl(row) {

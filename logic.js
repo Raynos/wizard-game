@@ -1,5 +1,4 @@
 var model = require('./model')
-var wrap = require('./wrap')
 
 module.exports = api
 
@@ -65,14 +64,18 @@ function api (row) {
 
   function safe (fun) {
     return function () {
+      console.log(JSON.stringify([ 'start', row.id ]))
       try {
         return fun.apply(this, arguments)
       } catch (err) {
+          console.log(JSON.stringify([ 'error', row.id ]))
         //TODO: present this back to the user somehow...
         //or, make the entity die.
         row.set('message', {text: err.toString().toUpperCase(), stroke: 'red', fill: 'black'})
         console.error('user-error', err.toString().toUpperCase())
+        return
       }
+      console.log(JSON.stringify([ 'end', row.id ]))
     }
   }
 
