@@ -32,4 +32,10 @@
   , "Try `self.move(self.whatDist(id))`"
   , ""
   , "## self.move(x,y)"
+  , ""
+  , "used to move around relative. Pass it"
+  , "an x and y that are relative to move"
+  , "or pass it an `{ x: x, y: y }` to move"
+  , ""
+  , "Try `self.move(self.whatDist(id))`"
 ]
