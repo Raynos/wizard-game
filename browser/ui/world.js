@@ -69,7 +69,7 @@ function World(model) {
         var relative = world.add(absolute)
         var alive = true
 
-        var entity = entities[type](paper, relative)
+        var entity = entities[type](paper, relative, row)
 
         if (entity.node && entity.node.addEventListener) {
             entity.node.addEventListener('click', onclick)

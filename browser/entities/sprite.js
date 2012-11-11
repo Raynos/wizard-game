@@ -7,6 +7,9 @@ function createSprite (paper, relative, opts) {
     var direction = 'front'
     var last = Date.now
     
+    var row = opts.row
+    row.on('change', onchange)
+    
     var entity = new EventEmitter
     entity.cleanup = cleanup
     entity.color = opts.color || 'purple'
@@ -46,20 +49,25 @@ function createSprite (paper, relative, opts) {
         return acc
     }, {})
 
-    var cancel = relative(function (pos) {
+    return entity
+    
+    function onchange (change) {
         var delta
-        
+        if (change.x === undefined || change.y === undefined) return;
+ 
         Object.keys(sprites).forEach(function (key, ix) {
             if (ix === 0) {
                 delta = {
-                    x : pos.x - sprites[key][0].attr('x'),
-                    y : pos.y - sprites[key][0].attr('y')
+                    x : change.x === undefined
+                        ? 0 : - sprites[key][0].attr('x')
+                    , y : change.y === undefined
+                        ? 0 :change.y - sprites[key][0].attr('y')
                 }
             }
             
             sprites[key].forEach(function (sprite) {
-                sprite.attr('x', pos.x)
-                sprite.attr('y', pos.y)
+                if (change.x) sprite.attr('x', change.x)
+                if (change.y) sprite.attr('y', change.y)
             })
             
             var dir = {
@@ -75,12 +83,10 @@ function createSprite (paper, relative, opts) {
             if (direction !== dir) animate()
             direction = dir
         })
-    })
-
-    return entity
+    }
 
     function cleanup() {
-        cancel()
+        row.removeListener('change', onchange)
         relative.removeListener('visible', onvisible)
         relative.removeListener('invisible', onhide)
         entity.remove()

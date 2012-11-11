@@ -3,7 +3,7 @@ var Sprite = require('./sprite')
 
 module.exports = wizard
 
-function wizard(paper, relative) {
+function wizard(paper, relative, row) {
     var colors = [ 'purple', 'green', 'orange' ]
     var directions = [ 'front', 'back', 'left', 'right' ]
  
@@ -26,9 +26,9 @@ function wizard(paper, relative) {
     var opts = {
         files: files
         , computeKey: function (direction) {
-            return entity.color + '_' + direction
+            return row.state.color + '_' + direction
         }
-        , color : 'purple'
+        , row : row
     }
     var entity = Sprite(paper, relative, opts)
 
