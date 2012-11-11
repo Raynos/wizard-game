@@ -2,32 +2,41 @@ var EventEmitter = require("events").EventEmitter
 var ArrowKeys = require("arrow-keys")
 var NAME = require('../name')
 
-module.exports = Player
+var Sprite = require('./sprite')
 
-function Player(paper, relative) {
-    var x = relative.x, y = relative.y
-    var w = 86, h = 133
-    
+module.exports = player
+
+function player(paper, relative, row) {
     var directions = [ 'front', 'back', 'left', 'right' ]
     var colors = [ 'purple', 'green', 'orange' ]
-    var sprites = colors.reduce(function (s, color) {
-        s[color] = directions.reduce(function (acc, dir) {
-            var pre = '/wizard_' + color + '_' + dir + '_'
-            acc[dir] = [
-                paper.image(pre + '0.svg', x, y, w, h).hide(),
-                paper.image(pre + '1.svg', x, y, w, h).hide(),
-            ]
-            return acc
-        }, {})
-        return s
+ 
+    var files = colors.reduce(function (acc, color) {
+        directions.forEach(function (dir) {
+            var key = color + '_' + dir
+            acc[key] = []
+ 
+            for (var i = 0; i < 2; i++) {
+                acc[key].push({
+                    file : '/wizard_' + key + '_' + i + '.svg'
+                    , width : 86
+                    , height : 133
+                })
+            }
+        })
+        return acc
     }, {})
-
+ 
+    var opts = {
+        files: files
+        , computeKey: function (direction) {
+            return row.state.color + '_' + direction
+        }
+        , row : row
+    }
+ 
+    var entity = Sprite(paper, relative, opts)
     var keys = ArrowKeys()
-    var direction = 'front'
-    var last = Date.now()
-
-    NAME.on('color', function (c) { animate(true) })
-
+ 
     keys.on('change', function (coords) {
         var key = ""
         if (coords.x) {
@@ -35,6 +44,7 @@ function Player(paper, relative) {
         } else if (coords.y) {
             key = "y" + coords.y
         }
+        else return
 
         var d = {
             'x1' : 'right',
@@ -42,25 +52,15 @@ function Player(paper, relative) {
             'y-1' : 'back',
             'y1' : 'front',
         }[key]
-        last = Date.now()
-        if (direction !== d) {
-            animate()
+ 
+        entity.last = Date.now()
+        if (entity.direction !== d) {
+            entity.direction = d
+            entity.animate()
         }
-        direction = d
+ 
+        entity.emit('change', coords)
     })
-
-    var animate = (function () {
-        var prev = null
-        var ix = 0
-        return function (override) {
-            if (override || Date.now() - last < 100) {
-                if (prev) prev.hide()
-                prev = sprites[NAME.color][direction][++ix % 2].show()
-            }
-        }
-    })()
-    animate(true)
-    setInterval(animate, 100)
-
-    return keys
+ 
+    return entity
 }

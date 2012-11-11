@@ -4,22 +4,21 @@ module.exports = createSprite
 
 function createSprite (paper, relative, opts) {
     var hidden = true, prev = null
-    var direction = 'front'
-    var last = Date.now
-    
     var row = opts.row
     
     var entity = new EventEmitter
     entity.cleanup = cleanup
     entity.color = opts.color || 'purple'
+    entity.direction = 'front'
+    entity.last = Date.now
  
     var animate = (function () {
         var ix = 0
         return function (override) {
             if (hidden) return
-            if (override || Date.now() - last < 100) {
+            if (override || Date.now() - entity.last < 100) {
                 if (prev) prev.hide()
-                var xs = sprites[computeKey(direction)]
+                var xs = sprites[computeKey(entity.direction)]
                 if (!xs) return
                 prev = xs[++ix % xs.length].show()
             }
@@ -27,6 +26,7 @@ function createSprite (paper, relative, opts) {
     })()
     animate(true)
     var iv = setInterval(animate, 100)
+    entity.animate = animate
  
     var lastPos = { x : row.state.x, y : row.state.y }
 
@@ -52,13 +52,16 @@ function createSprite (paper, relative, opts) {
             , 'y1' : 'back'
         }[key]
  
-        last = Date.now()
-        if (direction !== d) animate()
-        direction = d
+        entity.last = Date.now()
+        if (entity.direction !== d) animate()
+        entity.direction = d
     })
   
-    relative.on('visible', onvisible)
-    relative.on('invisible', onhide)
+    if (relative.on) {
+        relative.on('visible', onvisible)
+        relative.on('invisible', onhide)
+    }
+    else hidden = false
  
     var files = opts.files
     var computeKey = opts.computeKey || String;
@@ -78,16 +81,18 @@ function createSprite (paper, relative, opts) {
         return acc
     }, {})
  
-    relative(function (pos) {
+    if (typeof relative === 'function') relative(onrelative)
+
+    return entity
+    
+    function onrelative (pos) {
         Object.keys(sprites).forEach(function (key) {
             sprites[key].forEach(function (sprite, ix) {
                 sprite.attr('x', pos.x - files[key][ix].width / 2)
                 sprite.attr('y', pos.y - files[key][ix].height / 2)
             })
         })
-    })
-
-    return entity
+    }
     
     function cleanup() {
         clearInterval(iv)
@@ -105,7 +110,7 @@ function createSprite (paper, relative, opts) {
 
     function onvisible() {
         hidden = false
-        var xs = sprites[computeKey(direction)]
+        var xs = sprites[computeKey(entity.direction)]
         if (prev) prev.hide()
         if (xs) prev = xs[0].show()
     }
