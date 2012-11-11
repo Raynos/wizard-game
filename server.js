@@ -8,7 +8,7 @@ var http = require('http')
 var MuxDemux = require("mux-demux")
 var join = require('path').join
 var reloader = require('client-reloader')
-var uuid = require("node-uuid")
+//var uuid = require("node-uuid")
 
 var PORT = 3000
 var DEBUG = false
