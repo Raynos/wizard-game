@@ -26,12 +26,15 @@ function right(r, radius) {
 }
 
 function dist (a, b) {
-  a = model.get(a)
-  b = model.get(b)
+  a = a.get ? a : model.get(a)
+  b = b.get ? b : model.get(b)
   var x = a.get('x') - b.get('x')
   var y = a.get('y') - b.get('y')
   var l = Math.sqrt(x*x+y*y)
-  return {x: x, y: y, length: l} 
+
+  // console.log("x", x, "y", y, a.state, b.state)
+
+  return {x: x, y: y, length: l}
 }
 
 model.on('row_update', function detect () {
@@ -92,7 +95,7 @@ function api (row) {
     return function (listener) {
       model.removeListener(event, listener)
       if(isFunction(listener)) {
-        var wrapped = 
+        var wrapped =
         model.on(event, _listener = safe(wrapper(listener)))
       }
       return self
@@ -107,8 +110,11 @@ function api (row) {
 
     whatDist: function (other) {
       other = model.rows[other]
+
       if(!other) return
-      return dist(row, other)
+      var coord = dist(other, row)
+      // console.log("c", coord)
+      return coord
     },
 
     set: function () {

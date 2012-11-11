@@ -1,8 +1,35 @@
 [
-  '// click an item to see'
-  , '// its source codex'
-  , ''
-  , '# spells'
-  , ''
-  , '## self.say(msg)'
+  "// click an item to see"
+  , "// its source codex"
+  , ""
+  , "# spells"
+  , ""
+  , "## self.say(msg)"
+  , ""
+  , "self.say(String) allows you to print a"
+  , "message above yourself. Use this to"
+  , "either talk with other players or"
+  , "inspect values."
+  , ""
+  , "For example try `self.say(self.id())`"
+  , "or try `self.say(Object.keys(self))`"
+  , ""
+  , "## self.id()"
+  , ""
+  , "Prints your id. An entities id is "
+  , "used to uniquely identify them."
+  , "you will need the id to be able"
+  , "to target other things. Just click"
+  , "on a thing and look at the tome"
+  , "to see their id"
+  , ""
+  , "## self.whatDist(id)"
+  , ""
+  , "Pass in the id of another thing and"
+  , "get the x,y distance of it. Useful"
+  , "to move to them"
+  , ""
+  , "Try `self.move(self.whatDist(id))`"
+  , ""
+  , "## self.move(x,y)"
 ]

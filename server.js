@@ -28,7 +28,7 @@ function start () {
   cp.stdout.pipe(split()).pipe(through(function (line) {
     try { var msg = JSON.parse(line) }
     catch (e) { return }
-  
+
     if (!msg || !msg.length) return // heartbeat or noise
     var id = msg[1]
     var a = active[id] || 0
@@ -122,10 +122,10 @@ function mock(model) {
     model.create('rock')
 
 
-    model.create('monster')
-    model.create('monster')
-    model.create('monster')
-    model.create('monster')
+    // model.create('monster')
+    // model.create('monster')
+    // model.create('monster')
+    // model.create('monster')
 
 }
 

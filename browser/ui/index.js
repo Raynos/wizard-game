@@ -12,6 +12,8 @@ module.exports = UI
 
 function UI(doc) {
     var world = World(doc)
+    var source = "// I am a wizard \n// self.say(self.id())" +
+        "\n// self.say(Object.keys(self))"
 
     var player = {
         id: "wizard:" + NAME.name
@@ -24,6 +26,7 @@ function UI(doc) {
     if (NAME.newPlayer) {
         player.x = 300
         player.y = 240
+        player.source = source
     }
 
     var playerRow = doc.add(player)
@@ -33,6 +36,12 @@ function UI(doc) {
         player.color = c
         doc.set(player.id, player)
     })
+
+    setTimeout(function () {
+        if (!playerRow.state.source) {
+            playerRow.set("source", source)
+        }
+    }, 3000)
 
     Editor(world)
 

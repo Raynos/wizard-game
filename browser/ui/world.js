@@ -30,6 +30,21 @@ function World(model) {
     )
     var center = point({ x: width / 2, y: height / 2 })
     var world = screen(center, width, height)
+    var gen = generator(world, {
+        tick: 10000
+        , density: 1
+    })
+
+    gen.on("item", function (pos) {
+        var type = pick(types)
+
+        model.add({
+            id: type + "_" + uuid()
+            , x: pos.x
+            , y: pos.y
+            , type: type
+        })
+    })
 
     model.on("create", renderEntity)
     for (var id in model.rows)
@@ -39,7 +54,7 @@ function World(model) {
     return world
 
     function renderEntity(row) {
-        
+
         var state = row.state
 
         if(state.type) ready()
@@ -49,7 +64,15 @@ function World(model) {
             if (row.state.name === NAME.name) {
                 var repl = PlayerRepl(row)
 
-                return renderPlayer(paper, center, row)
+                var entity = renderPlayer(paper, center, row)
+
+                entity.on("click", function () {
+                    world.emit("examine", row)
+                })
+                setTimeout(function () {
+                    world.emit("examine", row)
+                }, 1000)
+                return
             }
 
             if (row.state.dead) {
@@ -75,7 +98,7 @@ function World(model) {
             entity.node.addEventListener('click', onclick)
         }
         else entity.on('click', onclick)
- 
+
         function onclick (e) {
             world.emit('examine', row)
         }
