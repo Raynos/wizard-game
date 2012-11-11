@@ -1,4 +1,5 @@
 var model = require('./model')
+var inspect = require('util').inspect
 
 module.exports = api
 
@@ -111,11 +112,25 @@ function api (row) {
       return dist(row, other)
     },
 
-    say: function (text) {
-      if(text) {
-        if(text.toString().length > 140)
-          text = text.toString().substring(0, 140)
-        row.set('message', {text: text})
+    set: function () {
+        return row.set.apply(row, arguments)
+    },
+
+    get: function () {
+        return row.get.apply(row, arguments)
+    },
+
+    say: function (text, opts) {
+      if(!opts) opts = {}
+      if(typeof text === 'object') {
+        opts = text
+      }
+      else opts.text = text
+
+      if(opts.text) {
+        if(String(opts.text).length > 140)
+          opts.text = String(text).substring(0, 140)
+        row.set('message', opts)
         model.emit('say', text, self.id())
       }
       return self
