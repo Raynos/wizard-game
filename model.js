@@ -103,7 +103,7 @@ function api (row) {
       //transfer energy to the other...
       //other.set('energy', other.get('energy') + amt)
 
-      //aha! you curse them, 
+      //aha! you curse them,
       //and then they might curse you back,
       //that will emit curse events,
       //
@@ -119,7 +119,7 @@ function api (row) {
       //or bless them back... whatever...
       /*
         function (other, amt) {
-          
+
         }
       */
     }
@@ -138,8 +138,8 @@ model.on('create', function (row) {
   //on the first update, set api stuff...
   row.api = api(row)
   row.once('update', function () {
-    console.log('create', row.toJSON())
-      console.log(row)
+    // console.log('create', row.toJSON())
+      // console.log(row)
     if(row.get('type') == 'monster')
       wrap(init)(row.api)
   })

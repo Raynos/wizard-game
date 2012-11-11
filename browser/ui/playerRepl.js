@@ -35,5 +35,6 @@ function PlayerRepl(row) {
         wrap(source)(row.api)
 
         editor.setValue("")
+        editor.textInput.blur()
     }
 }

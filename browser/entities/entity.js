@@ -44,7 +44,6 @@ function Entity(paper, relative) {
 
 
     function setSay(name) {
-        console.log("setSay")
         if (!sayText) {
             sayText = paper.text(relative.x + 50
                 , relative.y - 30, name)
