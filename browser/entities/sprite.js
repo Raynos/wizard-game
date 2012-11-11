@@ -14,6 +14,8 @@ function createSprite (paper, relative, opts) {
     entity.direction = 'front'
     entity.last = Date.now
 
+    console.log("paper", paper)
+
     var messageBack = paper.rect(relative.x, relative.y - 10, 200, 20)
     messageBack.attr('fill', 'transparent')
     messageBack.attr('stroke', 'transparent')
@@ -149,8 +151,8 @@ function createSprite (paper, relative, opts) {
         if (ch.message && typeof ch.message === 'object') {
             messageText.attr('text', String(ch.message.text || ''))
             messageText.attr('stroke', ch.message.stroke || 'red')
-            foreground(messageText)
             foreground(messageBack)
+            foreground(messageText)
 
             if (ch.message.fill) {
                 messageBack.attr('fill', 'rgba(0,0,0,1)') // reset opacity

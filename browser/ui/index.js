@@ -18,6 +18,7 @@ function UI(doc) {
         , name: NAME.name
         , color: NAME.color
         , type: "wizard"
+        , source: "// I am a wizard"
         , dead: false
     }
 
