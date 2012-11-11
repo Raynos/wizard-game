@@ -1,4 +1,5 @@
 var model = require('./model')
+var logic = require('./logic')
 
 var shoe = require('shoe')
 var ecstatic = require('ecstatic')
