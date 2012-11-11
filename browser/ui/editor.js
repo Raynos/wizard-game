@@ -13,13 +13,12 @@ var helpText = require('../../help.json').join('\n')
 function Code(world) {
     var ta = document.createElement('textarea')
     ta.className = 'code'
-    ta.value = helpText
     document.body.appendChild(ta)
- 
+
     var tj = document.createElement('textarea')
     tj.className = 'json'
     document.body.appendChild(tj)
- 
+
     var spellbook = document.createElement('div')
     spellbook.className = 'spellbook'
     spellbook.textContent = helpText
@@ -48,7 +47,7 @@ function Code(world) {
         var div = document.createElement('div')
         div.className = 'tab'
         div.textContent = txt
- 
+
         div.addEventListener('click', function (ev) {
             var o = tabs.querySelector('.active')
             if (o) o.className = 'tab'
@@ -56,10 +55,10 @@ function Code(world) {
             cb.call(div, ev)
             ever({ codex : ta, tome : tj }[txt]).emit('change')
         })
-        
+
         return div
     }
-    
+
     tabs.appendChild((function () {
         var div = document.createElement('div')
         div.className = 'cast tab'
@@ -75,7 +74,7 @@ function Code(world) {
             else if (name === 'tome') {
                 try { next = JSON.parse(tj.value) }
                 catch (err) { tj.className = 'json error'; return }
- 
+
                 tj.className = 'json'
 
                 var ch = Object.keys(current.state).concat(Object.keys(next))
@@ -89,7 +88,7 @@ function Code(world) {
                 current.set(ch)
             }
         })
- 
+
         var current
         world.on('examine', function (row) { current = row })
 
@@ -104,7 +103,7 @@ function Code(world) {
                 catch (err) {
                     ta.className = 'code error'
                     div.className = 'cast tab disable'
- 
+
                     return
                 }
                 ta.className = 'code'
@@ -129,7 +128,7 @@ function Code(world) {
 
         ta.addEventListener('change', onchange)
         ta.addEventListener('keydown', onchange)
-        
+
         return div
     })())
 
