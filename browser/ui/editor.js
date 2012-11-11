@@ -46,6 +46,11 @@ function Code(world) {
         var div = document.createElement('div')
         div.className = 'cast tab'
         div.textContent = 'cast'
+
+        div.addEventListener('click', function () {
+            var name = document.querySelector('.tab.active').textContent
+            console.log('cast ' + name)
+        })
         return div
     })())
 
