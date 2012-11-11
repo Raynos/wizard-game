@@ -60,6 +60,9 @@ function mock(model) {
 
 
     model.create('monster')
+    model.create('monster')
+    model.create('monster')
+    model.create('monster')
 
 }
 
