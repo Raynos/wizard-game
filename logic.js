@@ -65,8 +65,9 @@ function api (row) {
   function safe (fun) {
     return function () {
       console.log(JSON.stringify([ 'start', row.id ]))
+      var f
       try {
-        return fun.apply(this, arguments)
+        f = fun.apply(this, arguments)
       } catch (err) {
           console.log(JSON.stringify([ 'error', row.id ]))
         //TODO: present this back to the user somehow...
@@ -76,6 +77,7 @@ function api (row) {
         return
       }
       console.log(JSON.stringify([ 'end', row.id ]))
+      return f
     }
   }
 
