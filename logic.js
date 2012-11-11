@@ -95,7 +95,7 @@ function api (row) {
       if(text) {
         if(text.toString().length > 140)
           text = text.toString().substring(0, 140)
-        row.set('say', text)
+        row.set('message', {text: text})
         model.emit('say', text, self.id())
       }
       return self
