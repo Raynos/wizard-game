@@ -22,6 +22,7 @@ function renderPlayer(paper, absolute, row) {
         , y: row.state.y || (paper.height - 130) / 2
     }, row)
 
+    var speed = 5
     entity.on("change", function (changes) {
         var pos = {
             x: absolute.x
@@ -29,11 +30,11 @@ function renderPlayer(paper, absolute, row) {
         }
 
         if (changes.x) {
-            pos.x += changes.x
+            pos.x += changes.x * speed
         }
 
         if (changes.y) {
-            pos.y += changes.y
+            pos.y += changes.y * speed
         }
 
         row.set(pos)
