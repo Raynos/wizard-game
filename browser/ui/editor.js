@@ -70,7 +70,7 @@ function Code(world) {
             console.log('cast ' + name)
 
             if (name === 'codex') {
-                current.set('source', ta.value)
+                current.set({ source : ta.value, run : true })
             }
             else if (name === 'tome') {
                 try { next = JSON.parse(tj.value) }
