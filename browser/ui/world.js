@@ -24,29 +24,25 @@ function World(model) {
     var paper = Raphael(0, 40, width, height)
     var center = point({ x: width / 2, y: height / 2 })
     var world = screen(center, width, height)
-/*    var gen = generator(world)
-    gen.on("item", function (pos) {
-        var type = pick(types)
-        
-/*        var row = model.add({
-           id: type + ":" + uuid()
-            , x: pos.x
-            , y: pos.y
-            , type: type
-        })
 
-        create(pos, type, row)
-    })
-*/
+    console.log('WORLD')
+
     model.on("create", renderEntity)
+    for (var id in model.rows)
+      renderEntity(model.rows[id])
+
     world.center = center
     return world
 
     function renderEntity(row) {
+        
         var state = row.state
-        var type = state.id.split(":")[0]
+        console.log('READY', state)
 
-        row.once("change", function () {
+        if(state.type) ready()
+        else           row.once("change", ready)
+
+        function ready () {
             if (row.state.name === NAME.name) {
                 var repl = PlayerRepl(row)
 
@@ -57,12 +53,12 @@ function World(model) {
                 return
             }
 
-            if (!entities[type]) {
+            if (!entities[state.type]) {
                 return
             }
 
-            create(row.state, type, row)
-        })
+            create(row.state, state.type, row)
+        }
     }
 
     function create(pos, type, row) {
