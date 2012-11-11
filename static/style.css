@@ -4,9 +4,17 @@ body {
 }
 
 .top {
-    background-color: rgb(180,108,92);
+    background-color: rgb(50,30,20);
     padding-top: 4px;
     padding-left: 4px;
+}
+
+.top .key {
+    color: gray;
+}
+
+.top .value {
+    color: green;
 }
 
 svg {
@@ -47,7 +55,6 @@ svg {
 .color-picker {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 10px;
 }
 
 .color {
