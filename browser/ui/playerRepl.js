@@ -9,6 +9,8 @@ function PlayerRepl(row) {
     div.className = "repl"
     document.body.appendChild(div)
 
+    if (typeof ace === 'undefined') return;
+ 
     var editor = ace.edit(div)
     var session = editor.getSession()
 

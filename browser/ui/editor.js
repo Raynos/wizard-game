@@ -1,4 +1,3 @@
-
 var ace = window.ace
 
 module.exports = Editor
@@ -9,6 +8,8 @@ function Editor(world) {
 }
 
 function Code(world) {
+    if (typeof ace === 'undefined') return // fuck ace
+
     var div = document.createElement('div')
     div.className = 'code'
     document.body.appendChild(div)
@@ -29,6 +30,8 @@ function Code(world) {
 }
 
 function Display(world) {
+    if (typeof ace === 'undefined') return // fuck ace
+
     var div = document.createElement('div')
     div.className = 'display'
     document.body.appendChild(div)
