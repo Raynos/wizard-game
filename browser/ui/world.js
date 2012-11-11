@@ -52,8 +52,6 @@ function World(model) {
             if (row.state.name === NAME.name) {
                 var repl = PlayerRepl(row)
 
-
-
                 return renderPlayer(paper, center, row)
             }
 
@@ -80,8 +78,16 @@ function World(model) {
             world.emit('examine', row)
         })
 
+        if (pos.say) {
+            entity.setSay(pos.say)
+        }
+
         row.on("change", function (changes) {
             absolute(changes)
+
+            if (changes.say) {
+                entity.setSay(changes.say)
+            }
 
             if (changes.dead) {
                 alive = false
