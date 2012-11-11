@@ -40,13 +40,16 @@ function createSprite (paper, relative, opts) {
         if (delta.x === 0 && delta.y === 0) return
  
         lastPos = ch
-        var key = 'x' + delta.x + ',y' + delta.y
+ 
+        var key = ''
+        if (delta.x) key = 'x' + delta.x
+        else if (delta.y) key = 'y' + delta.y
  
         var d = {
-            'x1,y0': 'left'
-            , 'x-1,y0': 'right'
-            , 'x0,y-1': 'front'
-            , 'x0,y1' : 'back'
+            'x1': 'left'
+            , 'x-1': 'right'
+            , 'y-1': 'front'
+            , 'y1' : 'back'
         }[key]
  
         last = Date.now()
