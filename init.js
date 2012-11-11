@@ -10,7 +10,7 @@ setInterval(function () {
   //don't remove this, this is how the server knows that
   //this process is still alive (not inifinte looping)
   
-  process.stdout.write('[]\n') //heartbeat
+  process.stdout.write(' ') //heartbeat
 }, 500)
 
 var stream = net.connect(66666)
@@ -31,8 +31,8 @@ model.on('create', function (row) {
         clearTimeout(timer)
         console.log(ch, row.id)
         timer = setTimeout(function () {
-          console.log('RUN', row.state.run , row.id)
           if(row.state.run === false) return
+
           console.log('\n'+JSON.stringify([ 'start', row.id ]))
           try {
             fn = vm.runInNewContext(ch.source || ch.cast, {

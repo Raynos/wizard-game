@@ -33,7 +33,6 @@ function start () {
     var id = msg[1]
     var a = active[id] || 0
     active[id] = ('start' === msg[0] ? a + 1 : a - 1)
-    console.log(msg[0], id, active[id])
   }))
 
   cp.stderr.pipe(process.stderr, {end: false})
@@ -44,9 +43,6 @@ function start () {
     cp.stdout.removeListener('data', listener)
     cp.kill('SIGTERM')
 
-    console.log('++++++++++++++++++++++++++++++++')
-    console.log(active)
-    console.log('++++++++++++++++++++++++++++++++')
     for( var id in active) {
       if (active[id]) {
         console.log('marking ' + id + ' as not runnable', active[id])
@@ -65,7 +61,6 @@ function start () {
   var ended = false
   function end () {
     if(ended) return
-    console.log('END '+cp.pid)
     ended = true
     start()
   }
