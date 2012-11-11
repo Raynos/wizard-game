@@ -1,3 +1,4 @@
+var wrap = require('../../wrap')
 
 var ace = window.ace
 
@@ -9,43 +10,42 @@ function Editor(world) {
 }
 
 function Code(world) {
-    var div = document.createElement('div')
-    div.className = 'code'
-    document.body.appendChild(div)
+    var ta = document.createElement('textarea')
+    ta.className = 'code'
+    document.body.appendChild(ta)
 
-    var editor = ace.edit(div)
-    var session = editor.getSession()
+    var _row
+    function onChange () {
+        var fun
+        try {
+          fun = wrap(ta.value) //try and parse this...
+        } catch (err) {
+          return world.emit('examine', err.toString())
+        }
+        //EXECUTE THE CODE
+        console.log(fun.toString())
+        if(_row) fun(_row.api)
+    }
+    world.on("examine", function (row) {
+      world.emit('log', 'examine: '+ (row.id || row))
+        if(!row.get || !row.get('source')) return
 
-    // console.log("ace", ace, editor, session)
+        _row = row
+        ta.value = row.get("source")
 
-    editor.setTheme("ace/theme/monokai")
-    session.setMode("ace/mode/javascript")
-
-    editor.textInput.blur()
-
-    world.on("examine", function (entity) {
-        editor.setValue(entity.get("source"))
     })
 }
 
 function Display(world) {
-    var div = document.createElement('div')
-    div.className = 'display'
-    document.body.appendChild(div)
+    var log = document.createElement('pre')
+    log.className = 'display'
+    document.body.appendChild(log)
 
-    var editor = ace.edit(div)
-    var session = editor.getSession()
-
-    // console.log("ace", ace, editor, session)
-
-    editor.setTheme("ace/theme/monokai")
-    session.setMode("ace/mode/javascript")
-
-    editor.textInput.blur()
-
-    world.on('examine', function (entity) {
-        // console.log(entity)
-        editor.setValue(JSON.stringify(
-            entity.toJSON(), null, '\t'))
+    world.on('log', function (s) {
+      console.log(s)
+      log.appendChild(document.createTextNode(s+'\n'))
+      if(log.childNodes.length > 5)
+        log.removeChild(log.firstChild)
     })
+
 }

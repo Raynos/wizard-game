@@ -80,7 +80,7 @@ function World(model) {
             world.emit('examine', row)
         }
 
-        if (pos.say) {
+        if (pos.say && entity.setSay) {
             entity.setSay(pos.say)
         }
 
@@ -88,6 +88,7 @@ function World(model) {
             absolute(changes)
 
             if (changes.say) {
+              console.log('SAY', changes.say)
                 entity.setSay(changes.say)
             }
 
