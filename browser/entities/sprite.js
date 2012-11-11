@@ -111,14 +111,13 @@ function createSprite (paper, relative, opts) {
             }
         }
     })()
-    animate(true)
     var iv = setInterval(animate, 100)
     entity.animate = animate
 
     if (typeof relative === 'function') relative(onrelative)
 
     return entity
-    
+ 
     function onrelative (pos) {
         Object.keys(sprites).forEach(function (key) {
             sprites[key].forEach(function (sprite, ix) {
@@ -131,7 +130,7 @@ function createSprite (paper, relative, opts) {
         messageText.attr('y', pos.y - 80)
         resizeMessage()
     }
-    
+ 
     function cleanup() {
         clearInterval(iv)
  
