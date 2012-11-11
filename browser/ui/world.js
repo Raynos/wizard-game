@@ -65,6 +65,10 @@ function World(model) {
                 var repl = PlayerRepl(row)
 
                 var entity = renderPlayer(paper, center, row)
+                row.on('change', function (ch) {
+                    if (ch.error) world.emit('log', 'error: ' + ch.error)
+                    if (ch.result) world.emit('log', 'result: ' + ch.result)
+                })
 
                 entity.on("click", function () {
                     world.emit("examine", row)

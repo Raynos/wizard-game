@@ -1,6 +1,7 @@
 var model = require('./model')
 var api   = require('./logic')
 var vm = require('vm')
+var inspect = require('util').inspect
 
 var idle = require('idle')
 
@@ -26,7 +27,7 @@ model.on('create', function (row) {
     var timer
     var _fn
     row.on('change', function (ch) {
-      var fn
+      var res
       if((ch.source || ch.cast) && row.state.run !== false) {
         clearTimeout(timer)
         console.log(ch, row.id)
@@ -35,18 +36,19 @@ model.on('create', function (row) {
 
           console.log('\n'+JSON.stringify([ 'start', row.id ]))
           try {
-            fn = vm.runInNewContext(ch.source || ch.cast, {
+            res = vm.runInNewContext(ch.source || ch.cast, {
               self : row.api
             })
           } catch (err) {
-            row.set('message', {
-              text: err.toString(),
-              stroke: 'red', fill: 'black'
-            })
+            row.set('error', String(err))
             console.log('\n'+JSON.stringify([ 'error', row.id, String(err) ]))
             return
           }
           console.log('\n'+JSON.stringify([ 'end', row.id ]))
+          try {
+              row.set('result', inspect(res))
+          }
+          catch (e) { row.set('error', String(e)) }
         }, 100)
       }
 
