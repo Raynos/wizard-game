@@ -37,6 +37,17 @@ function Entity(paper, relative) {
       })
 
       would be WAY more obvious.
+
+      also, it means when I want to draw something else from the 
+      model... like the bounding box,
+      I can just get that straight off the row...
+      
+      but using this pattern, two files must be edited,
+      because I've you've added setSay to the view (entity)
+      and then somewhere else, you call it.
+
+      basically, you've got M, V, and MVcombiner
+
     */
 
     relative.on("visible", onvisible)
