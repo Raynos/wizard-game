@@ -3,9 +3,10 @@ var model = module.exports = new (crdt.Doc)
 var uuid = require("node-uuid")
 
 var wrap = require('./wrap')
+var DEBUG = false
 
 model.create = function (type) {
-    console.log('create', type)
+    if (DEBUG) console.log('create', type)
     return model.add({
           id: type + ':' + uuid()
         , x: Math.round(Math.random() * 600)
@@ -19,7 +20,7 @@ function api (row) {
   var api = {
     say: function (text) {
       if(text) {
-        console.log('<'+JSON.stringify(text)+'>--'+row.get('id') )
+        if (DEBUG) console.log('<'+JSON.stringify(text)+'>--'+row.get('id') )
         row.set('say', text)
       }
       return api
@@ -29,7 +30,7 @@ function api (row) {
       var _x = row.get('x') + x
         , _y = row.get('y') + y;
 
-      console.log('['+_x+', '+_y+']--'+row.get('id'))
+      if (DEBUG) console.log('['+_x+', '+_y+']--'+row.get('id'))
 
 
       row.set('x', _x)
@@ -39,7 +40,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      console.log('THINK')
+      if (DEBUG) console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if('function' === typeof think)
@@ -63,8 +64,8 @@ function api (row) {
 model.on('create', function (row) {
   //on the first update, set api stuff...
   row.once('update', function () {
-    console.log('create', row.toJSON())
-      console.log(row)
+    if (DEBUG) console.log('create', row.toJSON())
+    if (DEBUG) console.log(row)
     if(row.get('type') == 'monster')
       wrap(init)(api(row))
 

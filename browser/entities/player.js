@@ -61,6 +61,16 @@ function player(paper, relative, row) {
  
         entity.emit('change', coords)
     })
+
+    var ix = 0
+    setInterval(function () {
+        if (++ix % 2 === 0) row.set({ message : {} })
+        else row.set({ message : {
+            text : 'YOU ARE A WIZARD',
+            fill : 'blue',
+            stroke : 'yellow'
+        }})
+    }, 1000)
  
     return entity
 }

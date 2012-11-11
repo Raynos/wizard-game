@@ -5,33 +5,50 @@ module.exports = createSprite
 function createSprite (paper, relative, opts) {
     var hidden = true, prev = null
     var row = opts.row
-    
+    var files = opts.files
+    var computeKey = opts.computeKey || String;
+ 
     var entity = new EventEmitter
     entity.cleanup = cleanup
     entity.color = opts.color || 'purple'
     entity.direction = 'front'
     entity.last = Date.now
- 
-    var animate = (function () {
-        var ix = 0
-        return function (override) {
-            if (hidden) return
-            if (override || Date.now() - entity.last < 100) {
-                if (prev) prev.hide()
-                var xs = sprites[computeKey(entity.direction)]
-                if (!xs) return
-                prev = xs[++ix % xs.length].show()
-            }
-        }
-    })()
-    animate(true)
-    var iv = setInterval(animate, 100)
-    entity.animate = animate
+
+    var messageBack = paper.rect(relative.x, relative.y - 10, 200, 20)
+    messageBack.attr('fill', 'transparent')
+    messageBack.attr('stroke', 'transparent')
+
+    var messageText = paper.text(
+        relative.x + files[Object.keys(opts.files)[0]][0].width / 2,
+        relative.y - 10, row.state.message && row.state.message.text
+    )
  
     var lastPos = { x : row.state.x, y : row.state.y }
 
     row.on('change', function (ch) {
         if (ch.color) { onhide(); hidden = false; animate(true) }
+        if (ch.message && typeof ch.message === 'object') {
+            messageText.attr('text', String(ch.message.text || ''))
+            messageText.attr('stroke', ch.message.stroke || 'red')
+ 
+            if (ch.message.fill) {
+                var s = messageText.attr('text')
+                messageBack.attr('fill', 'rgba(0,0,0,1)') // reset opacity
+                messageBack.attr('fill', ch.message.fill)
+
+                var cols = Math.max.apply(null, s.split('\n')
+                    .map(function (line) { return line.length })
+                )
+                var rows = s.split('\n').length
+                var w = cols * 8, h = rows * 12
+
+                messageBack.attr('width', w)
+                messageBack.attr('height', h)
+                messageBack.attr('x', messageText.attr('x') - w / 2)
+                messageBack.attr('y', messageText.attr('y') - h / 2)
+            }
+            else messageBack.attr('fill', 'transparent')
+        }
  
         var delta = {
             x: lastPos.x - row.state.x
@@ -63,9 +80,6 @@ function createSprite (paper, relative, opts) {
     }
     else hidden = false
  
-    var files = opts.files
-    var computeKey = opts.computeKey || String;
-
     var sprites = Object.keys(files).reduce(function (acc, key) {
         acc[key] = files[key].map(function (r) {
             var im = paper.image(
@@ -81,6 +95,22 @@ function createSprite (paper, relative, opts) {
         return acc
     }, {})
  
+    var animate = (function () {
+        var ix = 0
+        return function (override) {
+            if (hidden) return
+            if (override || Date.now() - entity.last < 100) {
+                if (prev) prev.hide()
+                var xs = sprites[computeKey(entity.direction)]
+                if (!xs) return
+                prev = xs[++ix % xs.length].show()
+            }
+        }
+    })()
+    animate(true)
+    var iv = setInterval(animate, 100)
+    entity.animate = animate
+
     if (typeof relative === 'function') relative(onrelative)
 
     return entity
@@ -97,6 +127,9 @@ function createSprite (paper, relative, opts) {
     function cleanup() {
         clearInterval(iv)
  
+        messageText.remove()
+        messageBack.remove()
+
         row.removeListener('change', onchange)
         relative.removeListener('visible', onvisible)
         relative.removeListener('invisible', onhide)
@@ -113,6 +146,9 @@ function createSprite (paper, relative, opts) {
         var xs = sprites[computeKey(entity.direction)]
         if (prev) prev.hide()
         if (xs) prev = xs[0].show()
+        
+        messageText.show()
+        messageBack.show()
     }
 
     function onhide() {
@@ -122,5 +158,8 @@ function createSprite (paper, relative, opts) {
                 sprite.hide()
             })
         })
+
+        messageText.hide()
+        messageBack.hide()
     }
 }
