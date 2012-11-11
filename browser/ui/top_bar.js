@@ -44,7 +44,7 @@ function TopBar(row) {
     submit(elements.field, elements.button, function (value) {
         NAME.displayName = value
         component.emit("name", value)
-        NAME.emit('name')
+        NAME.emit('name', value)
     })
 
     NAME.on('name', function (name) {
