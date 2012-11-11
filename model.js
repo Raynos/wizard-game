@@ -19,7 +19,7 @@ function api (row) {
   var api = {
     say: function (text) {
       if(text) {
-        console.log('<'+JSON.stringify(text)+'>--'+row.get('id') )
+        // console.log('<'+JSON.stringify(text)+'>--'+row.get('id') )
         row.set('say', text)
       }
       return api
@@ -29,7 +29,7 @@ function api (row) {
       var _x = row.get('x') + x
         , _y = row.get('y') + y;
 
-      console.log('['+_x+', '+_y+']--'+row.get('id'))
+      // console.log('['+_x+', '+_y+']--'+row.get('id'))
 
 
       row.set('x', _x)
@@ -39,7 +39,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      console.log('THINK')
+      // console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if('function' === typeof think)
@@ -63,8 +63,8 @@ function api (row) {
 model.on('create', function (row) {
   //on the first update, set api stuff...
   row.once('update', function () {
-    console.log('create', row.toJSON())
-      console.log(row)
+    // console.log('create', row.toJSON())
+      // console.log(row)
     if(row.get('type') == 'monster')
       wrap(init)(api(row))
 
