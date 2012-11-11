@@ -38,7 +38,7 @@ svg {
     top: 37px;
     right: 0px;
     width: 396px;
-    bottom: 300px;
+    bottom: 200px;
     font-size: 12pt;
 }
 
@@ -54,7 +54,7 @@ svg {
     top: 37px;
     right: 0px;
     width: 396px;
-    bottom: 300px;
+    bottom: 200px;
     font-size: 12pt;
 }
 
@@ -66,8 +66,8 @@ svg {
     border-style: solid;
     border-color: rgb(50,30,20);
     border-left-width: 4px;
-    background-color: rgb(250,255,190);
-    color: rgb(40,80,15);
+    background-color: rgb(210,230,190);
+    color: rgb(33,50,15);
     padding: 2px;
     white-space: pre;
     font-family: monospace;
@@ -75,7 +75,7 @@ svg {
     top: 39px;
     right: 0px;
     width: 396px;
-    bottom: 300px;
+    bottom: 200px;
     font-size: 12pt;
 
     overflow-x: auto;
@@ -91,7 +91,7 @@ svg {
     right: 0px;
     width: 400px;
     height: 30px;
-    bottom: 272px;
+    bottom: 172px;
     font-size: 12pt;
     background-color: rgb(50,30,20);
 
@@ -148,7 +148,7 @@ svg {
     position: absolute;
     right: 0px;
     width: 400px;
-    height: 271px;
+    height: 171px;
     bottom: -15px;
     font-size: 12pt;
     
