@@ -4,8 +4,6 @@ var uuid = require("node-uuid")
 
 var wrap = require('./wrap')
 
-model.api = api
-
 model.create = function (type) {
     console.log('create', type)
     return model.add({
@@ -19,11 +17,10 @@ model.create = function (type) {
 function isFunction (f) {
   return 'function' === typeof f
 }
+
 function isObject (o) {
   return 'object' === typeof o
 }
-
-var battle = []
 
 function api (row) {
 
@@ -46,7 +43,9 @@ function api (row) {
 
     say: function (text) {
       if(text) {
-        console.log('<'+JSON.stringify(text)+'>--'+row.get('id'))
+        if(text.toString().length > 140)
+          text = text.toString().substring(0, 140)
+//        console.log('<'+JSON.stringify(text)+'>--'+row.get('id'))
         row.set('say', text)
         model.emit('say', text, self.id())
       }
@@ -60,8 +59,8 @@ function api (row) {
       var _x = row.get('x') + x
         , _y = row.get('y') + y;
 
-      console.log('['+_x+', '+_y+']--'+row.get('id'))
-      
+//      console.log('['+_x+', '+_y+']--'+row.get('id'))
+
       row.set('x', _x)
       row.set('y', _y)
       return self
@@ -70,7 +69,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      // console.log('THINK')
+      console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if(isFunction(think))
@@ -80,6 +79,7 @@ function api (row) {
 
     hear: function (hear) {
       function onSay (said, id) {
+        if(id === self.id()) return
         if(self.whatDist(id).length < 1000)
           hearer(said, id)
       }
@@ -103,7 +103,10 @@ function api (row) {
       //transfer energy to the other...
       //other.set('energy', other.get('energy') + amt)
 
-      return
+      //aha! you curse them, 
+      //and then they might curse you back,
+      //that will emit curse events,
+      //
     },
 
     //a curse is just a negative blessing.
@@ -133,12 +136,12 @@ function api (row) {
 
 model.on('create', function (row) {
   //on the first update, set api stuff...
+  row.api = api(row)
   row.once('update', function () {
-    // console.log('create', row.toJSON())
-      // console.log(row)
+    console.log('create', row.toJSON())
+      console.log(row)
     if(row.get('type') == 'monster')
-      wrap(init)(api(row))
-
+      wrap(init)(row.api)
   })
 })
 

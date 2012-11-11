@@ -1,7 +1,6 @@
 var ace = window.ace
 
 var wrap = require("../../wrap")
-var api = require("../../model").api
 
 module.exports = PlayerRepl
 
@@ -33,7 +32,7 @@ function PlayerRepl(row) {
 
     function handleRun() {
         var source = editor.getValue()
-        wrap(source)(api(row))
+        wrap(source)(row.api)
 
         editor.setValue("")
     }
