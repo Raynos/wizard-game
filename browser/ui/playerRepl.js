@@ -7,7 +7,7 @@ function PlayerRepl(row) {
 
     div.onkeyup = function (e) {
         if(e.keyCode == 13) { //enter
-            row.set('cast', e.target.value)
+            row.set({cast: e.target.value, run: true})
         }
     }
 
