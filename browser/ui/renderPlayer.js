@@ -35,4 +35,6 @@ function renderPlayer(paper, absolute, row) {
 
         row.set(pos)
     })
+
+    return entity
 }

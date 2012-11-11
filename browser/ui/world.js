@@ -33,7 +33,7 @@ function World(model) {
     return world
 
     function renderEntity(row) {
-        
+
         var state = row.state
 
         if(state.type) ready()
@@ -43,7 +43,12 @@ function World(model) {
             if (row.state.name === NAME.name) {
                 var repl = PlayerRepl(row)
 
-                return renderPlayer(paper, center, row)
+                var entity = renderPlayer(paper, center, row)
+
+                entity.on("click", function () {
+                    world.emit("examine", row)
+                })
+                return
             }
 
             if (row.state.dead) {
@@ -69,7 +74,7 @@ function World(model) {
             entity.node.addEventListener('click', onclick)
         }
         else entity.on('click', onclick)
- 
+
         function onclick (e) {
             world.emit('examine', row)
         }

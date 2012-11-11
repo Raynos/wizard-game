@@ -9,12 +9,12 @@ module.exports = player
 function player(paper, relative, row) {
     var directions = [ 'front', 'back', 'left', 'right' ]
     var colors = [ 'purple', 'green', 'orange' ]
- 
+
     var files = colors.reduce(function (acc, color) {
         directions.forEach(function (dir) {
             var key = color + '_' + dir
             acc[key] = []
- 
+
             for (var i = 0; i < 2; i++) {
                 acc[key].push({
                     file : '/wizard_' + key + '_' + i + '.svg'
@@ -25,7 +25,7 @@ function player(paper, relative, row) {
         })
         return acc
     }, {})
- 
+
     var opts = {
         files: files
         , computeKey: function (direction) {
@@ -33,10 +33,10 @@ function player(paper, relative, row) {
         }
         , row : row
     }
- 
+
     var entity = Sprite(paper, relative, opts)
     var keys = ArrowKeys()
- 
+
     keys.on('change', function (coords) {
         var key = ""
         if (coords.x) {
@@ -52,13 +52,13 @@ function player(paper, relative, row) {
             'y-1' : 'back',
             'y1' : 'front',
         }[key]
- 
+
         entity.last = Date.now()
         if (entity.direction !== d) {
             entity.direction = d
             entity.animate()
         }
- 
+
         entity.emit('change', coords)
     })
 
@@ -72,10 +72,10 @@ function player(paper, relative, row) {
             stroke : 'yellow'
         }})
     }, 1000)
- 
+
     entity.setName = function (name) {
         NAME.emit('name', name)
     }
- 
+
     return entity
 }
