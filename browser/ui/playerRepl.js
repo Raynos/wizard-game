@@ -7,7 +7,6 @@ function PlayerRepl(row) {
     div.className = "repl"
     document.body.appendChild(div)
 
-
     div.onkeyup = function (e) {
         if(e.keyCode == 13) { //enter
             row.set('message', {

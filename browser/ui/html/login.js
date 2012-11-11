@@ -1,7 +1,14 @@
-module.exports = '<div class="top">' +
-    '<div id="login" class="login">' +
-        '<input id="field"/>' +
-        '<button id="button">set name</button>' +
-    '</div>' +
-    '<div id="colors" class="color-picker"></div>' +
-'</div>'
+module.exports = '<div class="top">'
+    + '<span class="syntax">var</span> '
+    + '<span class="var">wizard</span> = {'
+    + '"<span class="key">name</span>" : '
+    + '<div id="login" class="login">'
+        + '<input id="field"/>'
+        + '<button id="button">set name</button>'
+    + '</div>'
+    + '<span id="name" class="value"></span>'
+    + ', "<span class="key">color</span>" : '
+    + '<div id="colors" class="color-picker value"></div>'
+    + ', "<span class="key">id</span>" : '
+    + '<span id="id" class="value"></span>'
++ ' }</div>'

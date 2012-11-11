@@ -7,11 +7,13 @@ var ever = require("ever")
 var NAME = require("../name")
 var loginHtml = require("./html/login")
 
-module.exports = Login
+module.exports = TopBar
 
-function Login() {
+function TopBar(row) {
     var elements = html(loginHtml)
         , component = new EventEmitter()
+
+    elements.id.textContent = JSON.stringify(row.state.id)
 
     var colors = [ "purple", "green", "orange" ]
     colors.forEach(function (color) {
@@ -40,10 +42,16 @@ function Login() {
     })
 
     submit(elements.field, elements.button, function (value) {
-        elements.login.style.display = 'none'
-        // MOTHER OF ALL HACKS
         NAME.displayName = value
         component.emit("name", value)
+        NAME.emit('name')
+    })
+
+    NAME.on('name', function (name) {
+        elements.login.style.display = 'none'
+        NAME.displayName = name
+        elements.name.textContent = JSON.stringify(name)
+        elements.name.style.display = 'inline'
     })
 
     component.root = elements.root

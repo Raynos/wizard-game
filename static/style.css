@@ -1,12 +1,26 @@
 body {
     background-color: rgb(240,235,157);
     margin: 0px;
+    overflow: hidden;
 }
 
 .top {
-    background-color: rgb(180,108,92);
+    background-color: rgb(50,30,20);
+    color: cyan;
     padding-top: 4px;
     padding-left: 4px;
+}
+
+.top .key {
+    color: magenta;
+}
+
+.top .value {
+    color: yellow;
+}
+
+.top .var {
+    color: orange;
 }
 
 svg {
@@ -47,7 +61,6 @@ svg {
 .color-picker {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 10px;
 }
 
 .color {
