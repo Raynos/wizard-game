@@ -5,8 +5,11 @@ var wrap = require("./wrap")
 var net = require('net')
 
 setInterval(function () {
-  console.log('.') //heartbeat
-}, 200)
+  //don't remove this, this is how the server knows that
+  //this process is still alive (not inifinte looping)
+  
+  process.stdout.write('.') //heartbeat
+}, 500)
 
 var stream = net.connect(66666)
 stream.pipe(model.createStream()).pipe(stream)
