@@ -7,7 +7,6 @@ module.exports = renderPlayer
 function renderPlayer(paper, absolute, row) {
     row.on("change", absolute)
 
-    console.log("renderPlayer")
     var entity = Player(paper, {
         x: row.state.x || (paper.width - 80) / 2
         , y: row.state.y || (paper.height - 130) / 2
