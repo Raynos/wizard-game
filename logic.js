@@ -168,7 +168,9 @@ function api (row) {
 
     hear: createListener('say', function (f) {
       return function (message, id) {
-        if(self.whatDist(id).length < 1000) f(message, id)
+        if(self.whatDist(id).length < 1000 && id !== self.id()) {
+          f(message, id)
+        }
       }
     }),
 

@@ -51,4 +51,9 @@
   , "will need to be near them and your"
   , "callback gets called with message and"
   , "id"
+  , ""
+  , "If you want to be an echo player try"
+  , "self.hear(function (message) {"
+  , "    self.say(message)"
+  , "})"
 ]
