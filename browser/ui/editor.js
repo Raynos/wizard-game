@@ -58,18 +58,19 @@ function Code(world) {
                 current.set('source', ta.value)
             }
             else if (name === 'tome') {
-                var next
                 try { next = JSON.parse(tj.value) }
                 catch (err) { tj.className = 'json error'; return }
  
                 tj.className = 'json'
 
-                var ch = Object.keys(current.state).reduce(function (acc, key) {
-                    if (!deepEqual(current.state[key], next[key])) {
-                        acc[key] = next[key]
-                    }
-                    return acc
-                })
+                var ch = Object.keys(current.state).concat(Object.keys(next))
+                    .reduce(function (acc, key) {
+                        if (!deepEqual(current.state[key], next[key])) {
+                            acc[key] = next[key]
+                        }
+                        return acc
+                    }, {})
+                ;
                 current.set(ch)
             }
         })
@@ -100,9 +101,11 @@ function Code(world) {
                 }
                 catch (err) {
                     tj.className = 'json error'
+                    div.className = 'cast tab disable'
                     return
                 }
                 tj.className = 'json'
+                div.className = 'cast tab'
             }
         }
 
