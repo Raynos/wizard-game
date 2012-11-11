@@ -25,8 +25,8 @@ function PlayerRepl(row) {
     editor.commands.addCommand({
         name: "run"
         , bindKey: {
-            win: "Ctrl-Return"
-            , mac: "Command-Return"
+            win: "Return"
+            , mac: "Return"
         }
         , exec: handleRun
     })
