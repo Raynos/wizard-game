@@ -53,7 +53,7 @@ model.on('row_update', function detect () {
     //so it is easy to check whether there has been a collision.
     while(sorted[j] && left(sorted[j]) < right(sorted[i])) {
       if(dist(sorted[i], sorted[j]).length < RADIUS*2) {
-        console.log('TOUCH', sorted[i], sorted[j])
+        //console.log('TOUCH', sorted[i], sorted[j])
         model.emit('touch', sorted[i], sorted[j])
       }
       j ++
@@ -118,7 +118,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      console.log('THINK')
+      //console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if(isFunction(think))

@@ -2,7 +2,7 @@
 var uuid = require("node-uuid")
 
 var World = require("./world")
-var Login = require("./login")
+var topBarUI = require("./top_bar")
 var Editor = require("./editor")
 
 // Hackish name
@@ -11,7 +11,7 @@ var NAME = require("../name")
 module.exports = UI
 
 function UI(doc) {
-    var login = Login()
+    var topBar = topBarUI()
     var world = World(doc)
 
     var player = {
@@ -35,9 +35,9 @@ function UI(doc) {
 
     Editor(world)
 
-    document.body.appendChild(login.root)
+    document.body.appendChild(topBar.root)
 
-    login.on("name", function (name) {
+    topBar.on("name", function (name) {
         // console.log("name", name)
         playerRow.set("displayName", name)
     })

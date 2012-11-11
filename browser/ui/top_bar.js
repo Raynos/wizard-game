@@ -7,9 +7,9 @@ var ever = require("ever")
 var NAME = require("../name")
 var loginHtml = require("./html/login")
 
-module.exports = Login
+module.exports = TopBar
 
-function Login() {
+function TopBar() {
     var elements = html(loginHtml)
         , component = new EventEmitter()
 
