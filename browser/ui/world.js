@@ -7,6 +7,7 @@ var pick = require("deck").pick
 var uuid = require("node-uuid")
 
 var entities = require("../entities")
+var PlayerRepl = require("./playerRepl")
 
 // mother of all hacks
 var NAME = require("../name")
@@ -18,7 +19,7 @@ module.exports = World
 
 function World(model) {
     var width = window.innerWidth - 400 - 4
-    var height = window.innerHeight - 40 - 4
+    var height = window.innerHeight - 80 - 4
 
     var paper = Raphael(0, 40, width, height)
     var center = point({ x: width / 2, y: height / 2 })
@@ -46,6 +47,8 @@ function World(model) {
 
         row.once("change", function () {
             if (row.state.name === NAME.name) {
+                var repl = PlayerRepl(row)
+
                 return renderPlayer(paper, center, row)
             }
 
@@ -77,8 +80,16 @@ function World(model) {
             world.emit('examine', row)
         }
 
+        if (pos.say) {
+            entity.setSay(pos.say)
+        }
+
         row.on("change", function (changes) {
             absolute(changes)
+
+            if (changes.say) {
+                entity.setSay(changes.say)
+            }
 
             if (changes.dead) {
                 alive = false

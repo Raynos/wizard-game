@@ -5,7 +5,17 @@ var Player = require("../entities/player")
 module.exports = renderPlayer
 
 function renderPlayer(paper, absolute, row) {
-    row.on("change", absolute)
+    row.on("change", function (changes) {
+        if (changes.displayName) {
+            entity.setName(changes.displayName)
+        }
+
+        if (changes.say) {
+            entity.setSay(changes.say)
+        }
+
+        absolute(changes)
+    })
 
     var entity = Player(paper, {
         x: row.state.x || (paper.width - 80) / 2

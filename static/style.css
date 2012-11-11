@@ -13,13 +13,31 @@ svg {
     border-bottom: 1px solid black;
 }
 
-div.source {
+.code {
     position: absolute;
-    top: 37px;
-    right: 0px;
+    top: 40px;
+    right: 0;
     width: 396px;
-    bottom: 0px;
+    bottom: 30%;
     font-size: 12pt;
+}
+
+.display {
+    position: absolute;
+    top: 71%;
+    right: 0;
+    width: 396px;
+    bottom: 0;
+    font-size: 12pt;
+}
+
+.repl {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    right: 396px;
+    left: 0;
+    font-size: 20pt !important;
 }
 
 .login {
