@@ -26,8 +26,6 @@ function World(model) {
     var world = screen(center, width, height)
     var gen = generator(world)
     gen.on("item", function (pos) {
-        console.log("rendering", pos)
-
         var type = pick(types)
         var row = model.add({
             id: type + ":" + uuid()
@@ -48,7 +46,6 @@ function World(model) {
         var type = state.id.split(":")[0]
 
         row.once("change", function () {
-            // console.log("change", row.state, NAME)
             if (row.state.name === NAME.name) {
                 var repl = PlayerRepl(row)
 

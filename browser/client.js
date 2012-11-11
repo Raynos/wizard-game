@@ -24,4 +24,3 @@ reconnect({maxDelay: 3e3}, reloader(function (stream) {
     var idStream = mdm.createStream("identity")
     idStream.write(NAME.name)
 })).connect('/shoe')
-

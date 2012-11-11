@@ -9,18 +9,19 @@ var reloader = require('client-reloader')
 var uuid = require("node-uuid")
 
 var PORT = 3000
+var DEBUG = false
 
 var server = http.createServer(
     ecstatic(join(__dirname, 'static'))
 )
 
 server.listen(PORT, function () {
-    console.log( 'listening on', PORT)
+    if (DEBUG) console.log( 'listening on', PORT)
 })
 
 var sock = shoe(reloader(function (stream) {
     var mdm = MuxDemux(function (stream) {
-        console.log("stream", stream.meta)
+        if (DEBUG) console.log("stream", stream.meta)
         if (stream.meta === "model") {
             stream.pipe(model.createStream()).pipe(stream)
         } else if (stream.meta === "identity") {
@@ -30,14 +31,14 @@ var sock = shoe(reloader(function (stream) {
             stream.on("data", function (name) {
                 name = name.toString()
 
-                console.log("name", name)
+                if (DEBUG) console.log("name", name)
 
                 stream.on("end", kill(name))
             })
         }
     })
 
-    console.log("connection")
+    if (DEBUG) console.log("connection")
 
     mdm.pipe(stream).pipe(mdm)
 }))

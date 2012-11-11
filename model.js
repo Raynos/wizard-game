@@ -5,7 +5,7 @@ var uuid = require("node-uuid")
 var wrap = require('./wrap')
 
 model.create = function (type) {
-    console.log('create', type)
+//console.log('create', type)
     return model.add({
           id: type + ':' + uuid()
         , x: Math.round(Math.random() * 600)
@@ -129,7 +129,7 @@ function api (row) {
     think: function (think) {
 
       clearInterval(thinker)
-      console.log('THINK')
+// console.log('THINK')
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if(isFunction(think))

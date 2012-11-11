@@ -1,4 +1,4 @@
-//var Entity = require("./entity")
+var Entity = require("./entity")
 var Sprite = require('./sprite')
 
 module.exports = wizard
@@ -30,7 +30,7 @@ function wizard(paper, relative, row) {
         }
         , row : row
     }
+    
     var entity = Sprite(paper, relative, opts)
-
     return entity
 }
