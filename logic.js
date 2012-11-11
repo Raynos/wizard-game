@@ -1,4 +1,5 @@
 var model = require('./model')
+var inspect = require('util').inspect
 
 module.exports = api
 
@@ -108,6 +109,14 @@ function api (row) {
       other = model.rows[other]
       if(!other) return
       return dist(row, other)
+    },
+
+    set: function () {
+        return row.set.apply(row, arguments)
+    },
+
+    get: function () {
+        return row.get.apply(row, arguments)
     },
 
     say: function (text, opts) {
