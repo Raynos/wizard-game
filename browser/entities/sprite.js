@@ -20,12 +20,39 @@ function createSprite (paper, relative, opts) {
             if (override || Date.now() - last < 100) {
                 if (prev) prev.hide()
                 var xs = sprites[computeKey(direction)]
+                if (!xs) return
                 prev = xs[++ix % xs.length].show()
             }
         }
     })()
     animate(true)
     setInterval(animate, 200)
+ 
+    var lastPos = { x : row.state.x, y : row.state.y }
+
+    row.on('change', function (ch) {
+        if (ch.color) { onhide(); onvisible() }
+ 
+        var delta = {
+            x: lastPos.x - row.state.x
+            , y: lastPos.y - row.state.y
+        }
+        if (delta.x === 0 && delta.y === 0) return
+ 
+        lastPos = ch
+        var key = 'x' + delta.x + ',y' + delta.y
+ 
+        var d = {
+            'x1,y0': 'left'
+            , 'x-1,y0': 'right'
+            , 'x0,y-1': 'front'
+            , 'x0,y1' : 'back'
+        }[key]
+ 
+        last = Date.now()
+        if (direction !== d) animate()
+        direction = d
+    })
   
     relative.on('visible', onvisible)
     relative.on('invisible', onhide)
@@ -60,7 +87,7 @@ function createSprite (paper, relative, opts) {
     return entity
     
     function cleanup() {
-        //row.removeListener('change', onchange)
+        row.removeListener('change', onchange)
         relative.removeListener('visible', onvisible)
         relative.removeListener('invisible', onhide)
  

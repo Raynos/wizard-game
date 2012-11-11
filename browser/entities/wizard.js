@@ -32,7 +32,5 @@ function wizard(paper, relative, row) {
     }
     
     var entity = Sprite(paper, relative, opts)
-    //var entity = Entity(paper, relative)
-    //entity.attr('fill', 'blue')
     return entity
 }
