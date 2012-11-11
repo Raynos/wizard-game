@@ -1,5 +1,6 @@
 var model = require('./model')
 var logic = require('./logic')
+var init = require('./init')
 
 var shoe = require('shoe')
 var ecstatic = require('ecstatic')
