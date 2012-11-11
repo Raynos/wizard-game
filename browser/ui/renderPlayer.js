@@ -10,6 +10,10 @@ function renderPlayer(paper, absolute, row) {
             entity.setName(changes.displayName)
         }
 
+        if (changes.say) {
+            entity.setSay(changes.say)
+        }
+
         absolute(changes)
     })
 

@@ -4,6 +4,8 @@ var uuid = require("node-uuid")
 
 var wrap = require('./wrap')
 
+model.api = api
+
 model.create = function (type) {
     console.log('create', type)
     return model.add({
