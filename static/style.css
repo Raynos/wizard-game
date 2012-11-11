@@ -15,7 +15,11 @@ body {
 }
 
 .top .value {
-    color: green;
+    color: yellow;
+}
+
+.top .var {
+    color: orange;
 }
 
 svg {

@@ -11,7 +11,6 @@ var NAME = require("../name")
 module.exports = UI
 
 function UI(doc) {
-    var topBar = topBarUI()
     var world = World(doc)
 
     var player = {
@@ -28,6 +27,8 @@ function UI(doc) {
     }
 
     var playerRow = doc.add(player)
+    var topBar = topBarUI(playerRow)
+
     NAME.on('color', function (c) {
         player.color = c
         doc.set(player.id, player)
