@@ -8,7 +8,6 @@ function createSprite (paper, relative, opts) {
     var last = Date.now
     
     var row = opts.row
-    row.on('change', onchange)
     
     var entity = new EventEmitter
     entity.cleanup = cleanup
@@ -27,7 +26,7 @@ function createSprite (paper, relative, opts) {
     })()
     animate(true)
     setInterval(animate, 200)
- 
+  
     relative.on('visible', onvisible)
     relative.on('invisible', onhide)
  
@@ -48,57 +47,42 @@ function createSprite (paper, relative, opts) {
         })
         return acc
     }, {})
+ 
+    relative(function (pos) {
+        Object.keys(sprites).forEach(function (key) {
+            sprites[key].forEach(function (sprite) {
+                sprite.attr('x', pos.x)
+                sprite.attr('y', pos.y)
+            })
+        })
+    })
 
     return entity
     
-    function onchange (change) {
-        var delta
-        if (change.x === undefined || change.y === undefined) return;
- 
-        Object.keys(sprites).forEach(function (key, ix) {
-            if (ix === 0) {
-                delta = {
-                    x : change.x === undefined
-                        ? 0 : - sprites[key][0].attr('x')
-                    , y : change.y === undefined
-                        ? 0 :change.y - sprites[key][0].attr('y')
-                }
-            }
-            
-            sprites[key].forEach(function (sprite) {
-                if (change.x) sprite.attr('x', change.x)
-                if (change.y) sprite.attr('y', change.y)
-            })
-            
-            var dir = {
-                '1,0' : 'right',
-                '-1,0' : 'left',
-                '0,1' : 'front',
-                '0,-1' : 'back',
-            }[delta.x + ',' + delta.y]
-            
-            if (!dir) return
- 
-            last = Date.now()
-            if (direction !== dir) animate()
-            direction = dir
-        })
-    }
-
     function cleanup() {
-        row.removeListener('change', onchange)
+        //row.removeListener('change', onchange)
         relative.removeListener('visible', onvisible)
         relative.removeListener('invisible', onhide)
-        entity.remove()
+ 
+        Object.keys(sprites).forEach(function (key) {
+            sprites[key].forEach(function (sprite) {
+                sprite.remove()
+            })
+        })
     }
 
     function onvisible() {
         hidden = false
-        animate(true)
+        var key = Object.keys(sprites)[0]
+        sprites[key][0].show()
     }
 
     function onhide() {
         hidden = true
-        if (prev) prev.hide()
+        Object.keys(sprites).forEach(function (key) {
+            sprites[key].forEach(function (sprite) {
+                sprite.hide()
+            })
+        })
     }
 }
