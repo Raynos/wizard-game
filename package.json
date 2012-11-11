@@ -1,6 +1,6 @@
 {
   "name": "nko3-teh-wizzards-of-stre",
-  "version": "0.0.2-2",
+  "version": "0.0.2-3",
   "description": "teh_wizzards_of_streamz",
   "main": "server.js",
   "scripts": {

@@ -103,7 +103,7 @@ function api (row) {
       //transfer energy to the other...
       //other.set('energy', other.get('energy') + amt)
 
-      //aha! you curse them, 
+      //aha! you curse them,
       //and then they might curse you back,
       //that will emit curse events,
       //
@@ -119,7 +119,7 @@ function api (row) {
       //or bless them back... whatever...
       /*
         function (other, amt) {
-          
+
         }
       */
     }
@@ -138,14 +138,31 @@ model.on('create', function (row) {
   //on the first update, set api stuff...
   row.api = api(row)
   row.once('update', function () {
-    console.log('create', row.toJSON())
-      console.log(row)
-    if(row.get('type') == 'monster')
+    // console.log('create', row.toJSON())
+      // console.log(row)
+    if(row.get('type') === 'monster') {
       wrap(init)(row.api)
+      row.set("source", string(init))
+    } else if (row.get("type") === "tree") {
+      wrap(tree)(row.api)
+      row.set("source", string(tree))
+    } else if (row.get("type") === "rock") {
+      wrap(rock)(row.api)
+      row.set("source", string(rock))
+    }
   })
 })
 
+function tree() {
+  // I am a tree
+}
+
+function rock() {
+  // I am a rock
+}
+
 //this function is eval'd (the user will enter it as text...)
+/*global self*/
 function init () {
   self.say('hello')
   self.think(function () {
@@ -158,12 +175,17 @@ function init () {
 
     self.move(x*10, y*10)
 
-    if(Math.random() < 0.1)
+    if(Math.random() < 0.1) {
       self.say('woof')
+    }
   })
 
   //if another monster speaks nearby...
   self.hear(function (words, id) {
     console.log('HEAR!', words, id)
   })
+}
+
+function string(code) {
+  return 'return ('+code.toString()+')();'
 }

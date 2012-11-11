@@ -13,9 +13,18 @@ svg {
     border-bottom: 1px solid black;
 }
 
-.source {
+.code {
     position: absolute;
-    top: 37px;
+    top: 40px;
+    right: 0;
+    width: 396px;
+    bottom: 30%;
+    font-size: 12pt;
+}
+
+.display {
+    position: absolute;
+    top: 71%;
     right: 0;
     width: 396px;
     bottom: 0;
