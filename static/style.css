@@ -77,6 +77,9 @@ svg {
     width: 396px;
     bottom: 300px;
     font-size: 12pt;
+
+    overflow-x: auto;
+    overflow-y: scroll;
 }
 
 .error {

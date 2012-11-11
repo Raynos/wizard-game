@@ -8,7 +8,7 @@ function Editor(world) {
     var code = Code(world)
 }
 
-var helpText = require('../../help.json')
+var helpText = require('../../help.json').join('\n')
 
 function Code(world) {
     var ta = document.createElement('textarea')
