@@ -18,13 +18,14 @@ function UI(doc) {
         , name: NAME.name
         , color: NAME.color
         , type: "wizard"
-        , source: "// I am a wizard"
         , dead: false
     }
 
     if (NAME.newPlayer) {
         player.x = 300
         player.y = 240
+        player.source = "// I am a wizard \n// self.say(self.id())" +
+            "\n// self.say(Object.keys(self))"
     }
 
     var playerRow = doc.add(player)

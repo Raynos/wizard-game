@@ -10,6 +10,8 @@ function Editor(world) {
 
 var helpText = require('../../help.json').join('\n')
 
+console.log("helpText", helpText)
+
 function Code(world) {
     var ta = document.createElement('textarea')
     ta.className = 'code'

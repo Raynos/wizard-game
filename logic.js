@@ -30,7 +30,7 @@ function dist (a, b) {
   var x = a.get('x') - b.get('x')
   var y = a.get('y') - b.get('y')
   var l = Math.sqrt(x*x+y*y)
-  return {x: x, y: y, length: l} 
+  return {x: x, y: y, length: l}
 }
 
 model.on('row_update', function detect () {
@@ -91,7 +91,7 @@ function api (row) {
     return function (listener) {
       model.removeListener(event, listener)
       if(isFunction(listener)) {
-        var wrapped = 
+        var wrapped =
         model.on(event, _listener = safe(wrapper(listener)))
       }
       return self
