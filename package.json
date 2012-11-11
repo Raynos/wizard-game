@@ -35,7 +35,8 @@
     "energy-relay": "~0.0.0",
     "once": "~1.1.1",
     "point-generator": "~0.1.0",
-    "deck": "0.0.4"
+    "deck": "0.0.4",
+    "deep-equal": "~0.0.0"
   },
   "engines": {
     "node": "0.8.x"

@@ -58,6 +58,10 @@ svg {
     font-size: 12pt;
 }
 
+.error {
+    background-color: rgb(255,220,180)
+}
+
 .tabs {
     position: absolute;
     right: 0px;
@@ -109,6 +113,11 @@ svg {
 .cast:hover {
     background-color: rgb(255,200,100);
     color: rgb(100,40,20);
+}
+
+.cast.disable {
+    background-color: rgb(120,120,120);
+    color: rgb(200,200,200);
 }
 
 .display {
