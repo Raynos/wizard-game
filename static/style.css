@@ -42,18 +42,73 @@ svg {
     font-size: 12pt;
 }
 
+.json {
+    display: none;
+
+    position: absolute;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+
+    top: 37px;
+    right: 0px;
+    width: 396px;
+    bottom: 300px;
+    font-size: 12pt;
+}
+
+.tabs {
+    position: absolute;
+    right: 0px;
+    width: 400px;
+    height: 30px;
+    bottom: 272px;
+    font-size: 12pt;
+    background-color: rgb(50,30,20);
+
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+}
+
+.tab {
+    display: inline-block;
+    background-color: rgb(220,220,220);
+    font-size: 15px;
+    height: 1em;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
+.tab:hover {
+    background-color: rgb(240,255,120);
+}
+
+.tab.active {
+    background-color: rgb(200,255,120);
+}
+
 .display {
     position: absolute;
     right: 0px;
     width: 400px;
-    height: 296px;
-    bottom: -17px;
+    height: 271px;
+    bottom: -15px;
     font-size: 12pt;
     
-    border-width: 4px;
+    border-width: 0px;
     border-style: solid;
     border-color: rgb(50,30,20);
-    border-right-width: 0px;
+    border-left-width: 4px;
     background-color: white;
     overflow: auto;
 }

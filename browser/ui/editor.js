@@ -1,7 +1,5 @@
 var wrap = require('../../wrap')
 
-var ace = window.ace
-
 module.exports = Editor
 
 function Editor(world) {
@@ -13,6 +11,38 @@ function Code(world) {
     var ta = document.createElement('textarea')
     ta.className = 'code'
     document.body.appendChild(ta)
+ 
+    var tj = document.createElement('textarea')
+    tj.className = 'json'
+    document.body.appendChild(tj)
+
+    var tabs = document.createElement('div')
+    tabs.className = 'tabs'
+    tabs.appendChild(createTab('codex', function () {
+        tj.style.display = 'none'
+        ta.style.display = 'block'
+    }))
+    tabs.appendChild(createTab('tome', function () {
+        ta.style.display = 'none'
+        tj.style.display = 'block'
+    }))
+    tabs.querySelector('.tab').className = 'tab active'
+
+    function createTab (txt, cb) {
+        var div = document.createElement('div')
+        div.className = 'tab'
+        div.textContent = txt
+        div.addEventListener('click', function (ev) {
+            var o = tabs.querySelector('.active')
+            if (o) o.className = 'tab'
+            div.className = 'tab active'
+            cb.call(div, ev)
+        })
+        
+        return div
+    }
+
+    document.body.appendChild(tabs)
 
     var _row
     function onChange () {
@@ -39,6 +69,7 @@ function Code(world) {
 
         _row = row
         ta.value = row.get("source")
+        tj.value = JSON.stringify(row.state, null, 2)
 
     })
 }
