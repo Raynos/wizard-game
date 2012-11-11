@@ -10,7 +10,7 @@ var newPlayer = false
 var name = store.get("name")
 
 if (!name) {
-    name = uuid()
+    name = uuid().substring(0,4)
     store.set("name", name)
     newPlayer = true
 }

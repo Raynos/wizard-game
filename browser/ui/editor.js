@@ -137,7 +137,7 @@ function Display(world) {
     document.body.appendChild(log)
 
     world.on('log', function (s) {
-      console.log(s)
+
       log.appendChild(document.createTextNode(s+'\n'))
       if(log.childNodes.length > 5)
         log.removeChild(log.firstChild)

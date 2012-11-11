@@ -9,33 +9,8 @@ function PlayerRepl(row) {
 
     div.onkeyup = function (e) {
         if(e.keyCode == 13) { //enter
-            row.set('message', {
-                text: e.target.value,
-                fill : 'blue',
-                stroke : 'yellow'  
-            })
+            row.set('cast', e.target.value)
         }
     }
-
-/*
-    console.log("editor", editor)
-
-    editor.commands.addCommand({
-        name: "run"
-        , bindKey: {
-            win: "Return"
-            , mac: "Return"
-        }
-        , exec: handleRun
-    })
-
-    function handleRun() {
-        var source = editor.getValue()
-        wrap(source)(row.api)
-
-        editor.setValue("")
-        editor.textInput.blur()
-    }
-*/
 
 }

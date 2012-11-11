@@ -25,8 +25,6 @@ function World(model) {
     var center = point({ x: width / 2, y: height / 2 })
     var world = screen(center, width, height)
 
-    console.log('WORLD')
-
     model.on("create", renderEntity)
     for (var id in model.rows)
       renderEntity(model.rows[id])
@@ -37,7 +35,6 @@ function World(model) {
     function renderEntity(row) {
         
         var state = row.state
-        console.log('READY', state)
 
         if(state.type) ready()
         else           row.once("change", ready)

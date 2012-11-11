@@ -11,11 +11,15 @@ model.on('create', function (row) {
     var _fn
     row.on('change', function (ch) {
       var fn
-      if(ch.source) {
+      if(ch.source || ch.cast) {
         try {
-          fn = wrap(ch.source)(row.api)
+          fn = wrap(ch.source || ch.cast)(row.api)
         } catch (err) {
-          console.error(err, ch.source)
+          row.set('message', {
+            text: err.toString(),
+            stroke: 'red', fill: 'black'
+          })
+          console.log(row.id, err)
         }
       }
     })
