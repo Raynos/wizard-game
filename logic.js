@@ -63,6 +63,19 @@ model.on('row_update', function detect () {
 
 function api (row) {
 
+  function safe (fun) {
+    return function () {
+      try {
+        return fun.apply(this, arguments)
+      } catch (err) {
+        //TODO: present this back to the user somehow...
+        //or, make the entity die.
+        row.set('message', {text: err.toString().toUpperCase(), stroke: 'red', fill: 'black'})
+        console.error('user-error', err.toString().toUpperCase())
+      }
+    }
+  }
+
   var thinker = null, hearer = null
   function createListener (event, wrapper) {
     wrapper = wrapper || function (l) {
@@ -72,17 +85,8 @@ function api (row) {
     return function (listener) {
       model.removeListener(event, listener)
       if(isFunction(listener)) {
-        var wrapped = wrapper(listener)
-        model.on(event, _listener = function () {
-          try {
-            wrapped.apply(this, arguments)
-          } catch (err) {
-            //TODO: present this back to the user somehow...
-            //or, make the entity die.
-            row.message({text: err.toString().toUpperCase(), stroke: 'red', fill: 'black'})
-            console.error('user-error', err.toString().toUpperCase())
-          }
-        })
+        var wrapped = 
+        model.on(event, _listener = safe(wrapper(listener)))
       }
       return self
     }
@@ -131,7 +135,7 @@ function api (row) {
       //depending on how 'smart' the entity is,
       //CURRENTLY, just hard code to 500 ms
       if(isFunction(think))
-        thinker = setInterval(think, 500)
+        thinker = setInterval(safe(think), 500)
       return self
     },
 
@@ -193,7 +197,7 @@ function api (row) {
     cursed: function (func) {
       //when you are cursed, curse them back.
       //or bless them back... whatever...
-      row._cursed = func
+      row._cursed = safe(func)
       /*
         function (id, amt) {
           return amt //to do battle...
