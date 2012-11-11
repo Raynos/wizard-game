@@ -27,7 +27,7 @@ function Code(world) {
         tj.style.display = 'block'
     }))
     tabs.querySelector('.tab').className = 'tab active'
-
+ 
     function createTab (txt, cb) {
         var div = document.createElement('div')
         div.className = 'tab'
@@ -41,6 +41,13 @@ function Code(world) {
         
         return div
     }
+    
+    tabs.appendChild((function () {
+        var div = document.createElement('div')
+        div.className = 'cast tab'
+        div.textContent = 'cast'
+        return div
+    })())
 
     document.body.appendChild(tabs)
 

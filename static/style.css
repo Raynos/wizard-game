@@ -97,6 +97,20 @@ svg {
     background-color: rgb(200,255,120);
 }
 
+.cast {
+    background-color: rgb(220,100,20);
+    position: absolute;
+    right: 4px;
+    width: 50px;
+    text-align: center;
+    color: rgb(255,220,180);
+}
+
+.cast:hover {
+    background-color: rgb(255,200,100);
+    color: rgb(100,40,20);
+}
+
 .display {
     position: absolute;
     right: 0px;
