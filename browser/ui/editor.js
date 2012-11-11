@@ -1,3 +1,5 @@
+var wrap = require('../../wrap')
+
 var ace = window.ace
 
 module.exports = Editor
@@ -8,47 +10,49 @@ function Editor(world) {
 }
 
 function Code(world) {
-    if (typeof ace === 'undefined') return // fuck ace
+    var ta = document.createElement('textarea')
+    ta.className = 'code'
+    document.body.appendChild(ta)
 
-    var div = document.createElement('div')
-    div.className = 'code'
-    document.body.appendChild(div)
+    var _row
+    function onChange () {
+        if(!_row) return
+        var fun
+        try {
+          fun = wrap(ta.value) //try and parse this...
+        } catch (err) {
+          return world.emit('log', err.toString())
+        }
+        //EXECUTE THE CODE
+        world.emit('log', 'update: '+_row.id)
+        _row.set('source', ta.value)
+//        if(_row) fun(_row.api)
+    }
+    var timer
+    ta.oninput = function () {
+      clearTimeout(timer)
+      timer = setTimeout(onChange, 500)
+    }
+    world.on("examine", function (row) {
+      world.emit('log', 'examine: '+ (row.id || row))
+        if(!row.get || !row.get('source')) return
 
-    var editor = ace.edit(div)
-    var session = editor.getSession()
+        _row = row
+        ta.value = row.get("source")
 
-    // console.log("ace", ace, editor, session)
-
-    editor.setTheme("ace/theme/monokai")
-    session.setMode("ace/mode/javascript")
-
-    editor.textInput.blur()
-
-    world.on("examine", function (entity) {
-        editor.setValue(entity.get("source"))
     })
 }
 
 function Display(world) {
-    if (typeof ace === 'undefined') return // fuck ace
+    var log = document.createElement('pre')
+    log.className = 'display'
+    document.body.appendChild(log)
 
-    var div = document.createElement('div')
-    div.className = 'display'
-    document.body.appendChild(div)
-
-    var editor = ace.edit(div)
-    var session = editor.getSession()
-
-    // console.log("ace", ace, editor, session)
-
-    editor.setTheme("ace/theme/monokai")
-    session.setMode("ace/mode/javascript")
-
-    editor.textInput.blur()
-
-    world.on('examine', function (entity) {
-        // console.log(entity)
-        editor.setValue(JSON.stringify(
-            entity.toJSON(), null, '\t'))
+    world.on('log', function (s) {
+      console.log(s)
+      log.appendChild(document.createTextNode(s+'\n'))
+      if(log.childNodes.length > 5)
+        log.removeChild(log.firstChild)
     })
+
 }

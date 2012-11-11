@@ -53,7 +53,6 @@ model.on('row_update', function detect () {
     //so it is easy to check whether there has been a collision.
     while(sorted[j] && left(sorted[j]) < right(sorted[i])) {
       if(dist(sorted[i], sorted[j]).length < RADIUS*2) {
-        //console.log('TOUCH', sorted[i], sorted[j])
         model.emit('touch', sorted[i], sorted[j])
       }
       j ++
@@ -209,14 +208,25 @@ model.on('create', function (row) {
   row.once('update', function () {
     // console.log('create', row.toJSON())
       // console.log(row)
+    var _fn
+    row.on('change', function (ch) {
+      var fn
+      if(ch.source) {
+        try {
+          console.log(ch.source)
+          fn = wrap(ch.source)(row.api)
+          console.log('applied')
+        } catch (err) {
+          console.error(err, ch.source)
+        }
+      }
+    })
+
     if(row.get('type') === 'monster') {
-      wrap(init)(row.api)
       row.set("source", string(init))
     } else if (row.get("type") === "tree") {
-      wrap(tree)(row.api)
       row.set("source", string(tree))
     } else if (row.get("type") === "rock") {
-      wrap(rock)(row.api)
       row.set("source", string(rock))
     }
   })
@@ -233,30 +243,31 @@ function rock() {
 //this function is eval'd (the user will enter it as text...)
 /*global self*/
 
+//remove indentation, so that it displays property in the text editor
 function init () {
-  self.say('hello')
-  self.think(function () {
-    function r () {
-      return (Math.random()*2 - 1)
-    }
-    var x = r(), y = r()
-    var l = Math.sqrt(x*x + y*y)
-    x = x / l; y = y / l
+self.say('hello')
+self.think(function () {
+  function r () {
+    return (Math.random()*2 - 1)
+  }
 
-    self.move(x*10, y*10)
+  var x = r(), y = r()
+  var l = Math.sqrt(x*x + y*y)
+  x = x / l; y = y / l
+  self.move(x*10, y*10)
 
-    if(Math.random() < 0.1) {
-      self.say('woof')
-    }
-  })
+  if(Math.random() < 0.1)
+    self.say('woof')
+})
 
-  //if another monster speaks nearby...
-  self.hear(function (words, id) {
-    //...
-  })
+//if another monster speaks nearby...
+self.hear(function (words, id) {
+  //...
+})
 }
 
 function string(code) {
-  return 'return ('+code.toString()+')();'
+  code = code.toString()
+  return code.substring(code.indexOf('{') + 1, code.length - 2)
 }
 
