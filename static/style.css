@@ -58,6 +58,27 @@ svg {
     font-size: 12pt;
 }
 
+.spellbook {
+    display: none;
+
+    position: absolute;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(50,30,20);
+    border-left-width: 4px;
+    background-color: rgb(250,255,190);
+    color: rgb(40,80,15);
+    padding: 2px;
+    white-space: pre;
+    font-family: monospace;
+
+    top: 39px;
+    right: 0px;
+    width: 396px;
+    bottom: 300px;
+    font-size: 12pt;
+}
+
 .error {
     background-color: rgb(255,220,180)
 }

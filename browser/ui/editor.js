@@ -1,4 +1,3 @@
-var wrap = require('../../wrap')
 var ever = require('ever')
 var deepEqual = require('deep-equal')
 
@@ -9,31 +8,47 @@ function Editor(world) {
     var code = Code(world)
 }
 
+var helpText = require('../../help.json')
+
 function Code(world) {
     var ta = document.createElement('textarea')
     ta.className = 'code'
+    ta.value = helpText
     document.body.appendChild(ta)
  
     var tj = document.createElement('textarea')
     tj.className = 'json'
     document.body.appendChild(tj)
+ 
+    var spellbook = document.createElement('div')
+    spellbook.className = 'spellbook'
+    spellbook.textContent = helpText
+    document.body.appendChild(spellbook)
 
     var tabs = document.createElement('div')
     tabs.className = 'tabs'
     tabs.appendChild(createTab('codex', function () {
         tj.style.display = 'none'
         ta.style.display = 'block'
+        spellbook.style.display = 'none'
     }))
     tabs.appendChild(createTab('tome', function () {
         ta.style.display = 'none'
         tj.style.display = 'block'
+        spellbook.style.display = 'none'
     }))
     tabs.querySelector('.tab').className = 'tab active'
+    tabs.appendChild(createTab('spellbook', function () {
+        ta.style.display = 'none'
+        tj.style.display = 'none'
+        spellbook.style.display = 'block'
+    }))
 
     function createTab (txt, cb) {
         var div = document.createElement('div')
         div.className = 'tab'
         div.textContent = txt
+ 
         div.addEventListener('click', function (ev) {
             var o = tabs.querySelector('.active')
             if (o) o.className = 'tab'
