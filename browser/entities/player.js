@@ -62,16 +62,14 @@ function player(paper, relative, row) {
         entity.emit('change', coords)
     })
 
-    var ix = 0
-    //just do this once...
+    row.set({ message : {
+        text : 'YOU ARE A WIZARD',
+        fill : 'blue',
+        stroke : 'yellow'
+    }})
     setTimeout(function () {
-        if (++ix % 2 === 0) row.set({ message : {} })
-        else row.set({ message : {
-            text : 'YOU ARE A WIZARD',
-            fill : 'blue',
-            stroke : 'yellow'
-        }})
-    }, 1000)
+        row.set({ message : {} })
+    }, 3000)
  
     entity.setName = function (name) {
         NAME.emit('name', name)
