@@ -36,7 +36,7 @@ function UI(doc) {
 
     Editor(world)
 
-    document.body.appendChild(topBar.root)
+    document.querySelector('#controls').appendChild(topBar.root)
 
     topBar.on("name", function (name) {
         // console.log("name", name)

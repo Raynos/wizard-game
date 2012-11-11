@@ -1,5 +1,5 @@
 var EventEmitter = require("events").EventEmitter
-var ArrowKeys = require("arrow-keys")
+var ArrowKeys = require("../../../vendor/arrow-keys")
 var NAME = require('../name')
 
 var Sprite = require('./sprite')
@@ -35,9 +35,10 @@ function player(paper, relative, row) {
     }
  
     var entity = Sprite(paper, relative, opts)
-    var keys = ArrowKeys()
+    var keys = ArrowKeys(60)
  
-    keys.on('change', function (coords) {
+    keys.on('change', function (coords, ev) {
+        
         var key = ""
         if (coords.x) {
             key = "x" + (coords.x > 0 ? 1 : -1)

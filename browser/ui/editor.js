@@ -14,16 +14,16 @@ function Code(world) {
     var ta = document.createElement('textarea')
     ta.className = 'code'
     ta.value = helpText
-    document.body.appendChild(ta)
+    document.querySelector('#controls').appendChild(ta)
  
     var tj = document.createElement('textarea')
     tj.className = 'json'
-    document.body.appendChild(tj)
+    document.querySelector('#controls').appendChild(tj)
  
     var spellbook = document.createElement('div')
     spellbook.className = 'spellbook'
     spellbook.textContent = helpText
-    document.body.appendChild(spellbook)
+    document.querySelector('#controls').appendChild(spellbook)
 
     var tabs = document.createElement('div')
     tabs.className = 'tabs'
@@ -133,7 +133,7 @@ function Code(world) {
         return div
     })())
 
-    document.body.appendChild(tabs)
+    document.querySelector('#controls').appendChild(tabs)
 
     world.on("examine", function (row) {
       world.emit('log', 'examine: '+ (row.id || row))
@@ -149,7 +149,7 @@ function Code(world) {
 function Display(world) {
     var log = document.createElement('pre')
     log.className = 'display'
-    document.body.appendChild(log)
+    document.querySelector('#controls').appendChild(log)
 
     world.on('log', function (s) {
 
