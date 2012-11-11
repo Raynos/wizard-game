@@ -13,7 +13,10 @@ module.exports = UI
 function UI(doc) {
     var world = World(doc)
     var source = "// I am a wizard \n// self.say(self.id())" +
-        "\n// self.say(Object.keys(self))"
+        "\n// self.say(Object.keys(self))" +
+        "\n// self.hear(function (message) {" +
+        "\n//    self.say(message)" +
+        "\n// })"
 
     var player = {
         id: "wizard:" + NAME.name
