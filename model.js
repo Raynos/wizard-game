@@ -21,10 +21,75 @@ function isFunction (f) {
 function isObject (o) {
   return 'object' === typeof o
 }
+var timer = null
+
+//gonna
+var RADIUS = 50
+
+function left(r, radius) {
+  r = model.get(r)
+  return r.get('x') - (radius || RADIUS) / 2
+}
+
+function right(r, radius) {
+  r = model.get(r)
+  return r.get('x') + (radius || RADIUS) / 2
+}
+
+function dist (a, b) {
+  a = model.get(a)
+  b = model.get(b)
+  var x = a.get('x') - b.get('x')
+  var y = a.get('y') - b.get('y')
+  var l = Math.sqrt(x*x+y*y)
+  return {x: x, y: y, length: l} 
+}
+
+model.on('row_update', function detect () {
+  if(timer)
+    return
+  //detect collisions.
+  var rows = model.rows
+  //sort by x
+  var sorted = Object.keys(rows).sort(function (a, b) {
+    left(a) - left(b)
+  })
+
+  //iterate over sorted..
+
+  sorted.forEach(function (e, i) {
+    //check things that maybe intersect.
+    var j = i + 1
+    //sort the elements by their left bound,
+    //so it is easy to check whether there has been a collision.
+    while(sorted[j] && left(sorted[j]) < right(sorted[i])) {
+      if(dist(sorted[i], sorted[j]).length < RADIUS*2) {
+        console.log('TOUCH', sorted[i], sorted[j])
+        model.emit('touch', sorted[i], sorted[j])
+      }
+      j ++
+    }
+  })
+  //  setTimeout(detect, 50)
+})
 
 function api (row) {
 
   var thinker = null, hearer = null
+  function createListener (event, wrapper) {
+    wrapper = wrapper || function (l) {
+      return l
+    }
+    var _listener
+    return function (listener) {
+      model.removeListener(event, listener)
+      if(isFunction(listener))
+        model.on(event, _listener = wrapper(listener))
+            
+      return self
+    }
+  }
+
   var self = {
 
     id: function () {
@@ -34,18 +99,13 @@ function api (row) {
     whatDist: function (other) {
       other = model.rows[other]
       if(!other) return
-      var x = row.get('x') - other.get('x')
-      var y = row.get('y') - other.get('y')
-      var l = Math.sqrt(x*x+y*y)
-
-      return {x: x, y: y, length: l}
+      return dist(row, other)
     },
 
     say: function (text) {
       if(text) {
         if(text.toString().length > 140)
           text = text.toString().substring(0, 140)
-//        console.log('<'+JSON.stringify(text)+'>--'+row.get('id'))
         row.set('say', text)
         model.emit('say', text, self.id())
       }
@@ -77,21 +137,19 @@ function api (row) {
       return self
     },
 
-    hear: function (hear) {
-      function onSay (said, id) {
-        if(id === self.id()) return
-        if(self.whatDist(id).length < 1000)
-          hearer(said, id)
+    hear: createListener('say', function (f) {
+      return function (message, id) {
+        if(self.whatDist(id).length < 1000) f(message, id)
       }
-      if(isFunction(hearer))
-        world.removeListener('say', onSay)
-      if(isFunction(hear)) {
-        hearer = hear
-        model.on('say', onSay)
+    }),
+
+    touch: createListener('touch', function (fun) {
+      return function (a, b) {
+        if (row.id == a) fun(b)
+        else
+        if (row.id == b) fun(a)
       }
-      //call function whenever someone says something.
-      return self
-    },
+    }),
 
     bless: function (id, atm) {
       //transfer energy to another ID
@@ -205,7 +263,7 @@ function init () {
 
   //if another monster speaks nearby...
   self.hear(function (words, id) {
-    console.log('HEAR!', words, id)
+    //...
   })
 }
 
