@@ -12,6 +12,8 @@ module.exports = UI
 
 function UI(doc) {
     var world = World(doc)
+    var source = "// I am a wizard \n// self.say(self.id())" +
+        "\n// self.say(Object.keys(self))"
 
     var player = {
         id: "wizard:" + NAME.name
@@ -24,8 +26,7 @@ function UI(doc) {
     if (NAME.newPlayer) {
         player.x = 300
         player.y = 240
-        player.source = "// I am a wizard \n// self.say(self.id())" +
-            "\n// self.say(Object.keys(self))"
+        player.source = source
     }
 
     var playerRow = doc.add(player)
@@ -36,9 +37,15 @@ function UI(doc) {
         doc.set(player.id, player)
     })
 
+    setTimeout(function () {
+        if (!playerRow.state.source) {
+            playerRow.set("source", source)
+        }
+    }, 3000)
+
     Editor(world)
 
-    document.body.appendChild(topBar.root)
+    document.querySelector('#controls').appendChild(topBar.root)
 
     topBar.on("name", function (name) {
         // console.log("name", name)

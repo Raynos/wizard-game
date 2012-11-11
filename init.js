@@ -2,13 +2,15 @@ var model = require('./model')
 var api   = require('./logic')
 var vm = require('vm')
 
+var idle = require('idle')
+
 var net = require('net')
 
 setInterval(function () {
   //don't remove this, this is how the server knows that
   //this process is still alive (not inifinte looping)
   
-  process.stdout.write('[]\n') //heartbeat
+  process.stdout.write(' ') //heartbeat
 }, 500)
 
 var stream = net.connect(66666)
@@ -20,25 +22,34 @@ model.on('create', function (row) {
   row.once('update', function () {
     // console.log('create', row.toJSON())
       // console.log(row)
+
+    var timer
     var _fn
     row.on('change', function (ch) {
       var fn
-      if(ch.source || ch.cast && row.state.run !== false) {
-        console.log(JSON.stringify([ 'start', row.id ]))
-        try {
-          fn = vm.runInNewContext(ch.source || ch.cast, {
-            self : row.api
-          })
-        } catch (err) {
-          row.set('message', {
-            text: err.toString(),
-            stroke: 'red', fill: 'black'
-          })
-          console.log(JSON.stringify([ 'error', row.id, String(err) ]))
-          return
-        }
-        console.log(JSON.stringify([ 'end', row.id ]))
+      if((ch.source || ch.cast) && row.state.run !== false) {
+        clearTimeout(timer)
+        console.log(ch, row.id)
+        timer = setTimeout(function () {
+          if(row.state.run === false) return
+
+          console.log('\n'+JSON.stringify([ 'start', row.id ]))
+          try {
+            fn = vm.runInNewContext(ch.source || ch.cast, {
+              self : row.api
+            })
+          } catch (err) {
+            row.set('message', {
+              text: err.toString(),
+              stroke: 'red', fill: 'black'
+            })
+            console.log('\n'+JSON.stringify([ 'error', row.id, String(err) ]))
+            return
+          }
+          console.log('\n'+JSON.stringify([ 'end', row.id ]))
+        }, 100)
       }
+
     })
 
     if(row.get('type') === 'monster') {

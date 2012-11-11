@@ -1,0 +1,46 @@
+{
+  "name": "arrow-keys",
+  "version": "1.0.0",
+  "description": "A stream of arrow keys",
+  "keywords": [],
+  "author": {
+    "name": "Raynos",
+    "email": "raynos2@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Raynos/arrow-keys.git"
+  },
+  "main": "index",
+  "homepage": "https://github.com/Raynos/arrow-keys",
+  "contributors": [
+    {
+      "name": "Jake Verbaten"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/Raynos/arrow-keys/issues",
+    "email": "raynos2@gmail.com"
+  },
+  "dependencies": {
+    "through": "~0.1.4",
+    "node-uuid": "~1.3.3",
+    "delta-stream": "~1.2.1"
+  },
+  "devDependencies": {
+    "browserify-server": "~1.2.2"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/Raynos/arrow-keys/raw/master/LICENSE"
+    }
+  ],
+  "scripts": {},
+  "readme": "# arrow-keys\n\nA stream of arrow keys\n\n## Example\n\nIs compatible with [delta-stream][1]. Emits x, y change in \"position\" in reaction to arrow keys being pressed.\n\n``` js\nvar ArrowKeys = require(\"arrow-keys\")\n    , delta = ArrowKeys()\n\ndelta.on(\"change\", function (key, value) {\n    // y,-1   x,-1   x,1   y,1\n    console.log(key, \",\", value)\n})\n\n/* NOW MASH UP LEFT RIGHT DOWN IN THAT ORDER */\n```\n\n## Installation\n\n`npm install arrow-keys`\n\n## Contributors\n\n - Raynos\n\n## MIT Licenced\n\n  [1]: http://github.com/Raynos/delta-stream",
+  "_id": "arrow-keys@1.0.0",
+  "dist": {
+    "shasum": "8fdc29c313cd286bef77bbc16487c1d4d09e6a28"
+  },
+  "_from": "arrow-keys@~1.0.0"
+}

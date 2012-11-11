@@ -149,6 +149,9 @@ function createSprite (paper, relative, opts) {
         }
 
         if (ch.message && typeof ch.message === 'object') {
+            messageBack.toFront()
+            messageText.toFront()
+
             messageText.attr('text', String(ch.message.text || ''))
             messageText.attr('stroke', ch.message.stroke || 'red')
             foreground(messageBack)

@@ -20,8 +20,14 @@ module.exports = World
 function World(model) {
     var width = window.innerWidth - 400 - 4
     var height = window.innerHeight - 80 - 4
+    var container = document.querySelector('#container')
+    container.style.width = width
+    container.style.height = height
 
-    var paper = Raphael(0, 40, width, height)
+    var paper = Raphael(
+        document.querySelector('#container'),
+        width, height
+    )
     var center = point({ x: width / 2, y: height / 2 })
     var world = screen(center, width, height)
     var gen = generator(world, {

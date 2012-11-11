@@ -106,6 +106,7 @@ function api (row) {
 
     whatDist: function (other) {
       other = model.rows[other]
+
       if(!other) return
       return dist(row, other)
     },

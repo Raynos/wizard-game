@@ -1,5 +1,5 @@
 var EventEmitter = require("events").EventEmitter
-var ArrowKeys = require("arrow-keys")
+var ArrowKeys = require("../../../vendor/arrow-keys")
 var NAME = require('../name')
 
 var Sprite = require('./sprite')
@@ -35,9 +35,9 @@ function player(paper, relative, row) {
     }
 
     var entity = Sprite(paper, relative, opts)
-    var keys = ArrowKeys()
+    var keys = ArrowKeys(60)
 
-    keys.on('change', function (coords) {
+    keys.on('change', function (coords, ev) {
         var key = ""
         if (coords.x) {
             key = "x" + (coords.x > 0 ? 1 : -1)
@@ -62,16 +62,15 @@ function player(paper, relative, row) {
         entity.emit('change', coords)
     })
 
-    var ix = 0
-    //just do this once...
+    row.set({ message : {
+        text : 'YOU ARE A WIZARD',
+        fill : 'blue',
+        stroke : 'yellow'
+    }})
+
     setTimeout(function () {
-        if (++ix % 2 === 0) row.set({ message : {} })
-        else row.set({ message : {
-            text : 'YOU ARE A WIZARD',
-            fill : 'blue',
-            stroke : 'yellow'
-        }})
-    }, 1000)
+        row.set({ message : {} })
+    }, 3000)
 
     entity.setName = function (name) {
         NAME.emit('name', name)
