@@ -4,7 +4,7 @@ module.exports = monster
 
 function monster(paper, relative, row) {
     var rs = [
-        { file : '/monster_0.svg', width: 150, height : 115 }
+        { file : '/monster_0.png', width: 150, height : 115 }
     ]
     var r = rs[Math.floor(Math.random() * rs.length)]
 
