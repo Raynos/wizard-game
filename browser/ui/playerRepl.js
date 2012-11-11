@@ -1,5 +1,3 @@
-var ace = window.ace
-
 var wrap = require("../../wrap")
 
 module.exports = PlayerRepl
