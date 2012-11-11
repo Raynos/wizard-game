@@ -24,22 +24,16 @@ var through = require('through')
 function start () {
   var cp = spawn(process.execPath, [__dirname +'/init.js'])
   cp.stdout.pipe(process.stdout, {end: false})
-
-  var lastId = null
+  var active = {}
   cp.stdout.pipe(split()).pipe(through(function (line) {
     try { var msg = JSON.parse(line) }
     catch (e) { return }
   
     if (!msg || !msg.length) return // heartbeat or noise
-    if (msg[0] === 'start') {
-      lastId = msg[1]
-    }
-    if (msg[0] === 'end') {
-      lastId = null
-    }
-    if (msg[0] === 'error') {
-      lastId = null
-    }
+    var id = msg[1]
+    var a = active[id] || 0
+    active[id] = ('start' === msg[0] ? a + 1 : a - 1)
+    console.log(msg[0], id, active[id])
   }))
 
   cp.stderr.pipe(process.stderr, {end: false})
@@ -50,10 +44,20 @@ function start () {
     cp.stdout.removeListener('data', listener)
     cp.kill('SIGTERM')
 
-    if (lastId) {
-      console.log('marking ' + lastId + ' as not runnable')
-      // mark the process that didn't exit as bad...
-      model.get(lastId).set('run', false)
+    console.log('++++++++++++++++++++++++++++++++')
+    console.log(active)
+    console.log('++++++++++++++++++++++++++++++++')
+    for( var id in active) {
+      if (active[id]) {
+        console.log('marking ' + id + ' as not runnable', active[id])
+        // mark the process that didn't exit as bad...
+        var ch = {
+          run: false,
+          cast: model.get(id).get('cast'),
+          source: model.get(id).get('source')
+        }
+        model.get(id).set(ch)
+      }
     }
   })
   cp.on('error', end)
