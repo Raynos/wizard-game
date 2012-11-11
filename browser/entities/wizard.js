@@ -1,4 +1,3 @@
-var Entity = require("./entity")
 var Sprite = require('./sprite')
 
 module.exports = wizard
